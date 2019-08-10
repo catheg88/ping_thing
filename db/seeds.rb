@@ -7,4 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(email: 'a@test.com', password: 'password', password_confirmation: 'password')
-Conversation.create(user_id: 1, subject: 'this is real')
+Conversation.create(user_id: 1, subject: 'this is one')
+Conversation.create(user_id: 1, subject: 'this is two')
