@@ -1,12 +1,19 @@
 import React from 'react'
 import { render as ReactDomRender } from 'react-dom'
-import { Provider, connect } from 'react-redux'
 
+import { Provider } from 'react-redux'
 import Store from '../Store'
 
+import ConversationsList from './ConversationsList'
+
 class App extends React.Component {
+
   render(){
-    return <div id="app">react threw this App component in here</div>
+    return (
+      <div id="app">
+        <ConversationsList />
+      </div>
+    )
   }
 }
 

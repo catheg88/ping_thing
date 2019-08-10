@@ -1,12 +1,12 @@
 const initialState = {
-
+  conversations: []
 }
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
-    case 'action':
+    case 'GET_CONVERSATIONS':
       return Object.assign({}, state, {
-
+        conversations: 'convos got'
       })
 
     default:
