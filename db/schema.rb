@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20190809235856) do
   create_table "messages", force: :cascade do |t|
     t.bigint "conversation_id"
     t.text "body"
+    t.boolean "read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
