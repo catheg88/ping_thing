@@ -4,4 +4,5 @@ class Api::ConversationsController < ApplicationController
   def index
     @conversations = User.find(current_user.id).conversations.all
   end
+
 end
