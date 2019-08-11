@@ -246,6 +246,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /***/ }),
 
+/***/ "./frontend/components/ConversationListItem.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/ConversationListItem.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ConversationListItem = function ConversationListItem(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.conversation.subject);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ConversationListItem);
+
+/***/ }),
+
 /***/ "./frontend/components/ConversationsList.jsx":
 /*!***************************************************!*\
   !*** ./frontend/components/ConversationsList.jsx ***!
@@ -259,6 +280,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
+/* harmony import */ var _ConversationListItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConversationListItem */ "./frontend/components/ConversationListItem.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -276,6 +298,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -300,14 +323,26 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "ConversationsList component");
+      var conversationListItems = this.props.conversations.map(function (conversation, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationListItem__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          conversation: conversation,
+          key: idx
+        });
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, conversationListItems));
     }
   }]);
 
   return ConversationsList;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+var mapState = function mapState(state) {
+  return {
+    conversations: state.conversations
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchConversations: function fetchConversations() {
       dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchConversations());
@@ -315,7 +350,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-ConversationsList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(ConversationsList);
+ConversationsList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ConversationsList);
 /* harmony default export */ __webpack_exports__["default"] = (ConversationsList);
 
 /***/ }),
