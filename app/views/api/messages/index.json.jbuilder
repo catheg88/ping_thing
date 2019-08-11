@@ -3,5 +3,5 @@ json.array!(@messages) do |message|
   json.user_id message.user_id
   json.body message.body
   json.read message.read
-  json.created message.created_at
+  json.created message.message_time
 end

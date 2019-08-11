@@ -9,7 +9,7 @@ const Actions = {
         } )
     }
   },
-
+  
   receiveConversations: conversations => ({
     type: 'RECEIVE_CONVERSATIONS',
     conversations: conversations
@@ -24,7 +24,7 @@ const Actions = {
         } )
     }
   },
-
+  
   receiveMessages: (messages, conversation_id) => {
     return {
       type: 'RECEIVE_MESSAGES',
