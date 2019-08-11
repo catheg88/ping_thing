@@ -17,6 +17,7 @@ class ConversationsList extends React.Component {
 
     return (
       <div>
+        <h1>Your messages</h1>
         <ul>
           {conversationListItems}
         </ul>

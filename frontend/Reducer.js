@@ -4,14 +4,22 @@ const initialState = {
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
-    // case 'FETCH_CONVERSATIONS':
-    //   return Object.assign({}, state, {
-    //     conversations: 'convos got'
-    //   })
 
     case 'RECEIVE_CONVERSATIONS':
       return Object.assign({}, state, {
         conversations: action.conversations
+      })
+
+    case 'RECEIVE_MESSAGES':
+      const newConversations = JSON.parse(JSON.stringify(state.conversations));
+      newConversations.forEach( conversation => {
+        if (conversation.id === action.conversation_id) {
+          conversation.messages = action.messages
+        }
+      })
+
+      return Object.assign({}, state, {
+        conversations: newConversations
       })
 
     default:
