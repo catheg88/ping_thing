@@ -4,9 +4,14 @@ const initialState = {
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
-    case 'GET_CONVERSATIONS':
+    // case 'FETCH_CONVERSATIONS':
+    //   return Object.assign({}, state, {
+    //     conversations: 'convos got'
+    //   })
+
+    case 'RECEIVE_CONVERSATIONS':
       return Object.assign({}, state, {
-        conversations: 'convos got'
+        conversations: action.conversations
       })
 
     default:

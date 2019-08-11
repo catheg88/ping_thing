@@ -4,7 +4,7 @@ import Actions from '../Actions.js'
 
 class ConversationsList extends React.Component {
   componentDidMount() {
-    this.props.getConversations()
+    this.props.fetchConversations()
   }
 
   render() {
@@ -15,8 +15,8 @@ class ConversationsList extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getConversations: () => {
-    dispatch(Actions.getConversations())
+  fetchConversations: () => {
+    dispatch(Actions.fetchConversations())
   }
 })
 

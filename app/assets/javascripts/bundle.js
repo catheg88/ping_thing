@@ -96,9 +96,19 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var Actions = {
-  getConversations: function getConversations() {
+  fetchConversations: function fetchConversations() {
+    return function (dispatch) {
+      return fetch('/api/conversations').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        dispatch(Actions.receiveConversations(res));
+      });
+    };
+  },
+  receiveConversations: function receiveConversations(conversations) {
     return {
-      type: 'GET_CONVERSATIONS'
+      type: 'RECEIVE_CONVERSATIONS',
+      conversations: conversations
     };
   }
 };
@@ -124,9 +134,13 @@ var Reducer = function Reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case 'GET_CONVERSATIONS':
+    // case 'FETCH_CONVERSATIONS':
+    //   return Object.assign({}, state, {
+    //     conversations: 'convos got'
+    //   })
+    case 'RECEIVE_CONVERSATIONS':
       return Object.assign({}, state, {
-        conversations: 'convos got'
+        conversations: action.conversations
       });
 
     default:
@@ -281,7 +295,7 @@ function (_React$Component) {
   _createClass(ConversationsList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.getConversations();
+      this.props.fetchConversations();
     }
   }, {
     key: "render",
@@ -295,8 +309,8 @@ function (_React$Component) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getConversations: function getConversations() {
-      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].getConversations());
+    fetchConversations: function fetchConversations() {
+      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchConversations());
     }
   };
 };
