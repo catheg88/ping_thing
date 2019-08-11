@@ -16,8 +16,8 @@ class Api::ConversationsController < ApplicationController
       @conversations << conversation
     end
 
-    def create # post to endpoint to create new conversation
-
+    def create
+      puts 'creating!!!!'
     end
 
   end

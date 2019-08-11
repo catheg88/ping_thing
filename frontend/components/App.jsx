@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import Store from '../Store'
 
 import ConversationsList from './ConversationsList'
+import NewMessage from './NewMessage'
 
 class App extends React.Component {
 
@@ -12,6 +13,7 @@ class App extends React.Component {
     return (
       <div id="app">
         <ConversationsList />
+        <NewMessage />
       </div>
     )
   }

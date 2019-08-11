@@ -23,6 +23,7 @@ const Reducer = function ( state = initialState, action ) {
       })
 
     default:
+      console.log('default')
       return state
   }
 }

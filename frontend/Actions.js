@@ -9,7 +9,7 @@ const Actions = {
         } )
     }
   },
-  
+
   receiveConversations: conversations => ({
     type: 'RECEIVE_CONVERSATIONS',
     conversations: conversations
@@ -24,14 +24,24 @@ const Actions = {
         } )
     }
   },
-  
-  receiveMessages: (messages, conversation_id) => {
-    return {
+
+  receiveMessages: (messages, conversation_id) => ({
       type: 'RECEIVE_MESSAGES',
       conversation_id: conversation_id,
       messages: messages
-    }
+  }),
 
+  // sendInitialMessage: message => ({
+  //   type: 'SEND_INITIAL_MESSAGE',
+  //   message: message
+  // })
+  sendInitialMessage: message => {
+    return function(dispatch) {
+      return fetch('/api/conversations', {
+                    body: message,
+                    method: "post"
+                  })
+    }
   }
 
 }
