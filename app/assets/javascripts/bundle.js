@@ -1993,8 +1993,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Store */ "./frontend/Store.js");
-/* harmony import */ var _ConversationsList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConversationsList */ "./frontend/components/ConversationsList.jsx");
-/* harmony import */ var _NewMessage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NewMessage */ "./frontend/components/NewMessage.jsx");
+/* harmony import */ var _ConversationList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConversationList */ "./frontend/components/ConversationList.jsx");
+/* harmony import */ var _NewConversation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NewConversation */ "./frontend/components/NewConversation.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2036,7 +2036,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationsList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewMessage__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "PingThing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
 
@@ -2159,10 +2159,10 @@ Conversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null,
 
 /***/ }),
 
-/***/ "./frontend/components/ConversationsList.jsx":
-/*!***************************************************!*\
-  !*** ./frontend/components/ConversationsList.jsx ***!
-  \***************************************************/
+/***/ "./frontend/components/ConversationList.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/ConversationList.jsx ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2196,18 +2196,18 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var ConversationsList =
+var ConversationList =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(ConversationsList, _React$Component);
+  _inherits(ConversationList, _React$Component);
 
-  function ConversationsList() {
-    _classCallCheck(this, ConversationsList);
+  function ConversationList() {
+    _classCallCheck(this, ConversationList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ConversationsList).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(ConversationList).apply(this, arguments));
   }
 
-  _createClass(ConversationsList, [{
+  _createClass(ConversationList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchConversations();
@@ -2221,11 +2221,11 @@ function (_React$Component) {
           key: idx
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Conversations));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Conversations));
     }
   }]);
 
-  return ConversationsList;
+  return ConversationList;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapState = function mapState(state) {
@@ -2242,8 +2242,8 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-ConversationsList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ConversationsList);
-/* harmony default export */ __webpack_exports__["default"] = (ConversationsList);
+ConversationList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ConversationList);
+/* harmony default export */ __webpack_exports__["default"] = (ConversationList);
 
 /***/ }),
 
@@ -2297,7 +2297,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       // console.log(this.props.message)
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "From: ", this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "At: ", this.props.message.created), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Message: ", this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Read? ", this.props.message.read ? "Yes" : "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "---"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "From: ", this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "At: ", this.props.message.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Message: ", this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "---"));
     }
   }]);
 
@@ -2308,10 +2308,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/NewMessage.jsx":
-/*!********************************************!*\
-  !*** ./frontend/components/NewMessage.jsx ***!
-  \********************************************/
+/***/ "./frontend/components/NewConversation.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/NewConversation.jsx ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2343,26 +2343,27 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var NewMessage =
+var NewConversation =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(NewMessage, _React$Component);
+  _inherits(NewConversation, _React$Component);
 
-  function NewMessage(props) {
+  function NewConversation(props) {
     var _this;
 
-    _classCallCheck(this, NewMessage);
+    _classCallCheck(this, NewConversation);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewMessage).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewConversation).call(this, props));
     _this.state = {
       to: "",
       subject: "",
-      message: ""
+      message: "",
+      errors: ""
     };
     return _this;
   }
 
-  _createClass(NewMessage, [{
+  _createClass(NewConversation, [{
     key: "handleToChange",
     value: function handleToChange(e) {
       e.preventDefault();
@@ -2390,6 +2391,14 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+
+      if (this.state.to === "" || this.state.subject === "" || this.state.message === "") {
+        this.setState({
+          errors: "To, Subject, and Message fields cannot be blank"
+        });
+        return;
+      }
+
       var initialMessageData = {
         'to': this.state.to,
         'subject': this.state.subject,
@@ -2400,7 +2409,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "To: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -2413,14 +2422,14 @@ function (_React$Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Message: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Send"
       })));
     }
   }]);
 
-  return NewMessage;
+  return NewConversation;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapDispatch = function mapDispatch(dispatch) {
@@ -2431,8 +2440,8 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-NewMessage = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewMessage);
-/* harmony default export */ __webpack_exports__["default"] = (NewMessage);
+NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversation);
+/* harmony default export */ __webpack_exports__["default"] = (NewConversation);
 
 /***/ }),
 

@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 
 import Actions from '../Actions'
 
-class NewMessage extends React.Component {
+class NewConversation extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       to: "",
       subject: "",
-      message: ""
+      message: "",
+      errors: ""
     }
   }
 
@@ -31,6 +32,10 @@ class NewMessage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    if ( this.state.to === "" || this.state.subject === "" || this.state.message === "") {
+      this.setState({ errors: "To, Subject, and Message fields cannot be blank"})
+      return
+    }
     const initialMessageData = {
       'to': this.state.to,
       'subject': this.state.subject,
@@ -43,6 +48,7 @@ class NewMessage extends React.Component {
 
     return (
       <div>
+        <h2>New Conversation</h2>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div>
             <label>
@@ -67,6 +73,7 @@ class NewMessage extends React.Component {
                         onChange={this.handleMessageChange.bind(this)} />
             </label>
           </div>
+          <div>{this.state.errors}</div>
           <input type="submit" value="Send" />
         </form>
       </div>
@@ -80,9 +87,9 @@ const mapDispatch = dispatch => ({
   }
 })
 
-NewMessage = connect(
+NewConversation = connect(
   null,
   mapDispatch
-)(NewMessage)
+)(NewConversation)
 
-export default NewMessage
+export default NewConversation

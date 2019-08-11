@@ -9,9 +9,8 @@ class Message extends React.Component {
     return (
       <div>
         <div>From: {this.props.message.from}</div>
-        <div>At: {this.props.message.created}</div>
+        <div>At: {this.props.message.created_at}</div>
         <div>Message: {this.props.message.body}</div>
-        <div>Read? {this.props.message.read ? "Yes" : "No"}</div>
         <div>---</div>
       </div>
     )

@@ -5,7 +5,7 @@ import Actions from '../Actions.js'
 
 import Conversation from './Conversation'
 
-class ConversationsList extends React.Component {
+class ConversationList extends React.Component {
   componentDidMount() {
     this.props.fetchConversations()
   }
@@ -17,7 +17,7 @@ class ConversationsList extends React.Component {
 
     return (
       <div>
-        <h1>Your messages</h1>
+        <h2>Messages</h2>
         <ul>
           {Conversations}
         </ul>
@@ -36,9 +36,9 @@ const mapDispatch = dispatch => ({
   }
 })
 
-ConversationsList = connect(
+ConversationList = connect(
   mapState,
   mapDispatch
-)(ConversationsList)
+)(ConversationList)
 
-export default ConversationsList
+export default ConversationList
