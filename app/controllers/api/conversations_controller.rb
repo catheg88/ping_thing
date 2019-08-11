@@ -15,10 +15,22 @@ class Api::ConversationsController < ApplicationController
       end
       @conversations << conversation
     end
+  end
 
-    def create
-      puts 'creating!!!!'
+  def create
+    conversation = Conversation.new({
+      user_id: current_user.id,
+      subject: params[:subject]
+    })
+
+    if conversation.save
+      puts 'yes! it saved!'
+    else
+      puts conversation.errors.full_messages
+      @errors = conversation.errors.full_messages
+      render "api/shared/error", status: 422
     end
+
 
   end
 

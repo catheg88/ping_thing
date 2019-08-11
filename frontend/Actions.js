@@ -1,11 +1,12 @@
+import axios from 'axios'
+
 const Actions = {
 
   fetchConversations: () => {
     return function(dispatch) {
-      return fetch('/api/conversations')
-        .then( res => res.json() )
+      return axios.get('/api/conversations')
         .then( res => {
-          dispatch(Actions.receiveConversations(res))
+          dispatch(Actions.receiveConversations(res.data))
         } )
     }
   },
@@ -36,11 +37,10 @@ const Actions = {
   //   message: message
   // })
   sendInitialMessage: message => {
+    console.log('message')
+    console.log(message)
     return function(dispatch) {
-      return fetch('/api/conversations', {
-                    body: message,
-                    method: "post"
-                  })
+      return axios.post('/api/conversations', message)
     }
   }
 
