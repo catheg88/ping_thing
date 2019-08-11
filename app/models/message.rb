@@ -2,6 +2,10 @@ class Message < ApplicationRecord
   belongs_to :conversation
 
   def message_time
-    created_at.strftime("%-d/%-m/%y at %-l:%M %p")
+    created_at.strftime("%-m/%-d/%y, %-l:%M %p")
+  end
+
+  def from
+    User.find(user_id).email
   end
 end

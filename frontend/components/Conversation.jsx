@@ -5,7 +5,7 @@ import Actions from '../Actions.js'
 
 import Message from './Message'
 
-class ConversationListItem extends React.Component {
+class Conversation extends React.Component {
   constructor(props) {
     super(props)
     this.state = { expanded: false }
@@ -28,26 +28,18 @@ class ConversationListItem extends React.Component {
     } else {
       messageComponents = null
     }
+
     return (
       <div>
         <li onClick={ () => this.handleConversationClick(this.props.conversation.id) }>
-          {this.props.conversation.subject}
+          <div><b>Subject: </b>{this.props.conversation.subject}</div>
+          <div><b>Participants: </b>{this.props.conversation.participants.join(", ")}</div>
         </li>
         <ul>
           {messageComponents}
         </ul>
       </div>
     )
-    // return (
-    //   <div>
-    //     <li onClick={ () => this.handleConversationClick(this.props.conversation.id) }>
-    //       {this.props.conversation.subject}
-    //     </li>
-    //     { this.props.conversation.messages ?
-    //       <div>yes</div> : null
-    //     }
-    //   </div>
-    // )
   }
 
 }
@@ -58,9 +50,9 @@ const mapDispatch = dispatch => ({
   }
 })
 
-ConversationListItem = connect(
+Conversation = connect(
   null,
   mapDispatch
-)(ConversationListItem)
+)(Conversation)
 
-export default ConversationListItem
+export default Conversation

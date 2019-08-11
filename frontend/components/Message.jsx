@@ -8,9 +8,11 @@ class Message extends React.Component {
     // console.log(this.props.message)
     return (
       <div>
-        <div>{this.props.message.created}</div>
-        <div>{this.props.message.body}</div>
-        <div>{this.props.message.read}</div>
+        <div>From: {this.props.message.from}</div>
+        <div>At: {this.props.message.created}</div>
+        <div>Message: {this.props.message.body}</div>
+        <div>Read? {this.props.message.read ? "Yes" : "No"}</div>
+        <div>---</div>
       </div>
     )
   }

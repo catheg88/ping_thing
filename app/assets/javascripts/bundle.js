@@ -269,10 +269,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /***/ }),
 
-/***/ "./frontend/components/ConversationListItem.jsx":
-/*!******************************************************!*\
-  !*** ./frontend/components/ConversationListItem.jsx ***!
-  \******************************************************/
+/***/ "./frontend/components/Conversation.jsx":
+/*!**********************************************!*\
+  !*** ./frontend/components/Conversation.jsx ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -306,24 +306,24 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var ConversationListItem =
+var Conversation =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(ConversationListItem, _React$Component);
+  _inherits(Conversation, _React$Component);
 
-  function ConversationListItem(props) {
+  function Conversation(props) {
     var _this;
 
-    _classCallCheck(this, ConversationListItem);
+    _classCallCheck(this, Conversation);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ConversationListItem).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Conversation).call(this, props));
     _this.state = {
       expanded: false
     };
     return _this;
   }
 
-  _createClass(ConversationListItem, [{
+  _createClass(Conversation, [{
     key: "handleConversationClick",
     value: function handleConversationClick(conversation_id) {
       if (!this.props.conversation.messages) {
@@ -357,20 +357,11 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this2.handleConversationClick(_this2.props.conversation.id);
         }
-      }, this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents)); // return (
-      //   <div>
-      //     <li onClick={ () => this.handleConversationClick(this.props.conversation.id) }>
-      //       {this.props.conversation.subject}
-      //     </li>
-      //     { this.props.conversation.messages ?
-      //       <div>yes</div> : null
-      //     }
-      //   </div>
-      // )
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), this.props.conversation.participants.join(", "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents));
     }
   }]);
 
-  return ConversationListItem;
+  return Conversation;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapDispatch = function mapDispatch(dispatch) {
@@ -381,8 +372,8 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-ConversationListItem = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(ConversationListItem);
-/* harmony default export */ __webpack_exports__["default"] = (ConversationListItem);
+Conversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(Conversation);
+/* harmony default export */ __webpack_exports__["default"] = (Conversation);
 
 /***/ }),
 
@@ -399,7 +390,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
-/* harmony import */ var _ConversationListItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConversationListItem */ "./frontend/components/ConversationListItem.jsx");
+/* harmony import */ var _Conversation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Conversation */ "./frontend/components/Conversation.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -442,13 +433,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var conversationListItems = this.props.conversations.map(function (conversation, idx) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationListItem__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      var Conversations = this.props.conversations.map(function (conversation, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Conversation__WEBPACK_IMPORTED_MODULE_3__["default"], {
           conversation: conversation,
           key: idx
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, conversationListItems));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Conversations));
     }
   }]);
 
@@ -524,7 +515,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       // console.log(this.props.message)
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.message.created), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.message.read));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "From: ", this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "At: ", this.props.message.created), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Message: ", this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Read? ", this.props.message.read ? "Yes" : "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "---"));
     }
   }]);
 

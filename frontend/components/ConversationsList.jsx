@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Actions from '../Actions.js'
 
-import ConversationListItem from './ConversationListItem'
+import Conversation from './Conversation'
 
 class ConversationsList extends React.Component {
   componentDidMount() {
@@ -11,15 +11,15 @@ class ConversationsList extends React.Component {
   }
 
   render() {
-    const conversationListItems = this.props.conversations.map( (conversation, idx) => {
-      return <ConversationListItem conversation={conversation} key={idx} />
+    const Conversations = this.props.conversations.map( (conversation, idx) => {
+      return <Conversation conversation={conversation} key={idx} />
     })
 
     return (
       <div>
         <h1>Your messages</h1>
         <ul>
-          {conversationListItems}
+          {Conversations}
         </ul>
       </div>
     )

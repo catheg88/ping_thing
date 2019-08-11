@@ -10,7 +10,7 @@ User.create(email: 'a@test.com', password: 'password', password_confirmation: 'p
 User.create(email: 'b@test.com', password: 'password', password_confirmation: 'password')
 
 Conversation.create(user_id: 1, subject: "this is a's message thread")
-Message.create(conversation_id: 1, user_id: 1, body: "a's 1st message", read: false)
+Message.create(conversation_id: 1, user_id: 1, body: "a's 1st message", read: false, created_at: '2019-08-10 19:12:33')
 Message.create(conversation_id: 1, user_id: 2, body: "b's reply is the 2nd message in this thread", read: false)
 ConversationUser.create(conversation_id: 1, user_id: 2)
 ConversationUser.create(conversation_id: 1, user_id: 1)
