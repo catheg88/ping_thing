@@ -41,7 +41,7 @@ Additional indexes in the database ensure speedy:
 * Database queries (e.g. finding a `User`'s `Conversation`s and finding a `Conversation`'s `User`s)
 * Validations (e.g. confirming uniqueness of `ConversationUser` records)
 
-See `db/schema.rb` for comprehensive database structure.
+See [db/schema.rb](db/schema.rb) for comprehensive database structure.
 
 
 
