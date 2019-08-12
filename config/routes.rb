@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: "static_pages#root"
 
   namespace :api, defaults: {format: :json} do
+    resource :current_user, only: [:show]
     resources :conversations, only: [:index, :create] do
       resources :messages
     end

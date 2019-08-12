@@ -13,9 +13,7 @@
         cluster: 'us3',
         forceTLS: true
       });
-
-      var channel = pusher.subscribe('ping_channel');
-
+      var pusherChannel = pusher.subscribe('ping_channel');
     </script>
 
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>

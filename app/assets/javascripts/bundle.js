@@ -1864,6 +1864,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
+  getUser: function getUser() {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
+        dispatch(Actions.receiveUser(res.data.id));
+      });
+    };
+  },
+  receiveUser: function receiveUser(id) {
+    return {
+      type: 'RECEIVE_USER',
+      id: id
+    };
+  },
   fetchConversations: function fetchConversations() {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/conversations').then(function (res) {
@@ -1916,6 +1929,7 @@ var Actions = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(console) {var initialState = {
+  current_user: '',
   conversations: []
 };
 
@@ -1924,7 +1938,13 @@ var Reducer = function Reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case 'RECEIVE_USER':
+      return Object.assign({}, state, {
+        current_user: action.id
+      });
+
     case 'RECEIVE_CONVERSATIONS':
+      // TODO: handle no conversations
       return Object.assign({}, state, {
         conversations: action.conversations
       });
@@ -2030,21 +2050,37 @@ function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getUser();
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
 
   return App;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // pusherChannel provided from rails `app/views/layouts/application.html.erb`
 
-channel.bind('update', function (data) {
+
+pusherChannel.bind('update', function (data) {
   console.log('app receiving pusher update');
   console.log(data); // Store.dispatch(Actions.fetchConversations())
 });
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getUser: function getUser() {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].getUser());
+    }
+  };
+};
+
+App = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(null, mapDispatch)(App);
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: _Store__WEBPACK_IMPORTED_MODULE_3__["default"]

@@ -72,10 +72,17 @@ class Api::ConversationsController < ApplicationController
     #   @errors = conversation.errors.full_messages
     #   render "api/shared/error", status: 422
     # end
-    Pusher.trigger('ping_channel', 'update', {
-      message: 'new_conversation'
-    })
 
+    # package up who needs to know and send pusher update
+    interested_users = []
+    conversation.users.each do |u|
+      interested_users << u.id
+    end
+
+    Pusher.trigger('ping_channel', 'update', {
+      message: 'new_conversation',
+      interested_users: interested_users
+    })
   end
 
 end

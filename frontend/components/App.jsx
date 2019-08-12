@@ -1,7 +1,7 @@
 import React from 'react'
 import { render as ReactDomRender } from 'react-dom'
 
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import Store from '../Store'
 import Actions from '../Actions'
 
@@ -10,21 +10,37 @@ import NewConversation from './NewConversation'
 
 class App extends React.Component {
 
-  render(){
+  componentDidMount() {
+    this.props.getUser()
+  }
+
+  render() {
     return (
       <div id="app">
-        <ConversationList />
         <NewConversation />
+        <ConversationList />
       </div>
     )
   }
 }
 
-channel.bind('update', function(data) {
+// pusherChannel provided from rails `app/views/layouts/application.html.erb`
+pusherChannel.bind('update', function(data) {
   console.log('app receiving pusher update')
   console.log(data)
   // Store.dispatch(Actions.fetchConversations())
 })
+
+const mapDispatch = dispatch => ({
+  getUser: () => {
+    dispatch(Actions.getUser())
+  }
+})
+
+App = connect(
+  null,
+  mapDispatch
+)(App)
 
 document.addEventListener("DOMContentLoaded", function () {
   ReactDomRender(

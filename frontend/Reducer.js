@@ -1,11 +1,18 @@
 const initialState = {
+  current_user: '',
   conversations: []
 }
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
 
+    case 'RECEIVE_USER':
+      return Object.assign({}, state, {
+        current_user: action.id
+      })
+
     case 'RECEIVE_CONVERSATIONS':
+      // TODO: handle no conversations
       return Object.assign({}, state, {
         conversations: action.conversations
       })

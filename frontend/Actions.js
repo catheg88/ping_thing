@@ -2,6 +2,20 @@ import axios from 'axios'
 
 const Actions = {
 
+  getUser: () => {
+    return function(dispatch) {
+      return axios.get('/api/current_user')
+        .then( res => {
+          dispatch(Actions.receiveUser(res.data.id))
+        })
+    }
+  },
+
+  receiveUser: id => ({
+    type: 'RECEIVE_USER',
+    id: id
+  }),
+
   fetchConversations: () => {
     return function(dispatch) {
       return axios.get('/api/conversations')
@@ -39,7 +53,7 @@ const Actions = {
 
   sendReplyMessage: message => {
     return function(dispatch){
-      return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)    
+      return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)
     }
   }
 
