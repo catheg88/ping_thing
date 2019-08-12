@@ -6,6 +6,18 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+
+    <script>
+      // Pusher.logToConsole = true;
+      var pusher = new Pusher('d7d39e67cb68dbf78891', {
+        cluster: 'us3',
+        forceTLS: true
+      });
+
+      var channel = pusher.subscribe('ping_channel');
+
+    </script>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 

@@ -17,6 +17,7 @@ class Api::ConversationsController < ApplicationController
       end
       @conversations << conversation
     end
+
   end
 
   def create
@@ -71,6 +72,9 @@ class Api::ConversationsController < ApplicationController
     #   @errors = conversation.errors.full_messages
     #   render "api/shared/error", status: 422
     # end
+    Pusher.trigger('ping_channel', 'update', {
+      message: 'new_conversation'
+    })
 
   end
 
