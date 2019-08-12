@@ -1890,6 +1890,19 @@ var Actions = {
       conversations: conversations
     };
   },
+  fetchConversation: function fetchConversation(conversation_id) {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id)).then(function (res) {
+        dispatch(Actions.receiveConversation(res.data));
+      });
+    };
+  },
+  receiveConversation: function receiveConversation(conversation) {
+    return {
+      type: 'RECEIVE_CONVERSATION',
+      conversation: conversation
+    };
+  },
   fetchMessages: function fetchMessages(conversation_id) {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id, "/messages")).then(function (res) {
@@ -1941,6 +1954,13 @@ var Reducer = function Reducer() {
     case 'RECEIVE_USER':
       return Object.assign({}, state, {
         current_user: action.id
+      });
+
+    case 'RECEIVE_CONVERSATION':
+      var newConversations = JSON.parse(JSON.stringify(state.conversations));
+      newConversations.unshift(action.conversation);
+      return Object.assign({}, state, {
+        conversations: newConversations
       });
 
     case 'RECEIVE_CONVERSATIONS':
@@ -2064,13 +2084,7 @@ function (_React$Component) {
   }]);
 
   return App;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // pusherChannel provided from rails `app/views/layouts/application.html.erb`
-
-
-pusherChannel.bind('update', function (data) {
-  console.log('app receiving pusher update');
-  console.log(data); // Store.dispatch(Actions.fetchConversations())
-});
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
@@ -2085,6 +2099,20 @@ document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: _Store__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null)), document.getElementById("content"));
+}); // pusherChannel provided from rails `app/views/layouts/application.html.erb`
+
+pusherChannel.bind('update', function (data) {
+  console.log('Pusher update');
+  var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user;
+
+  if (data.interested_users.includes(currentUser)) {
+    console.log('youre interested');
+    console.log(data);
+
+    if (data.message === 'new_conversation') {
+      _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
+    }
+  }
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 

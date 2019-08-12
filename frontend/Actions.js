@@ -30,6 +30,20 @@ const Actions = {
     conversations: conversations
   }),
 
+  fetchConversation: conversation_id => {
+    return function(dispatch) {
+      return axios.get(`/api/conversations/${conversation_id}`)
+        .then( res => {
+          dispatch(Actions.receiveConversation(res.data))
+        })
+    }
+  },
+
+  receiveConversation: conversation => ({
+    type: 'RECEIVE_CONVERSATION',
+    conversation: conversation
+  }),
+
   fetchMessages: conversation_id => {
     return function(dispatch) {
       return axios.get(`/api/conversations/${conversation_id}/messages`)

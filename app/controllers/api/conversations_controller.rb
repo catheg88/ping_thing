@@ -20,6 +20,20 @@ class Api::ConversationsController < ApplicationController
 
   end
 
+  def show
+    conversation = Conversation.find(params[:id])
+    @conversation = {
+      "id" => conversation.id,
+      "subject" => conversation.subject,
+      "participants" => [],
+      "created_at" => conversation.conversation_created_at,
+      "updated_at" => conversation.conversation_updated_at
+    }
+    conversation.users.each do |u|
+      @conversation["participants"] << u.email
+    end
+  end
+
   def create
     logs = []
     conversation = Conversation.new(
@@ -81,7 +95,8 @@ class Api::ConversationsController < ApplicationController
 
     Pusher.trigger('ping_channel', 'update', {
       message: 'new_conversation',
-      interested_users: interested_users
+      interested_users: interested_users,
+      conversation_id: conversation.id
     })
   end
 

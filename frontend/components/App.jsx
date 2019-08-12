@@ -24,13 +24,6 @@ class App extends React.Component {
   }
 }
 
-// pusherChannel provided from rails `app/views/layouts/application.html.erb`
-pusherChannel.bind('update', function(data) {
-  console.log('app receiving pusher update')
-  console.log(data)
-  // Store.dispatch(Actions.fetchConversations())
-})
-
 const mapDispatch = dispatch => ({
   getUser: () => {
     dispatch(Actions.getUser())
@@ -49,3 +42,16 @@ document.addEventListener("DOMContentLoaded", function () {
     </Provider>,
     document.getElementById("content"));
 });
+
+// pusherChannel provided from rails `app/views/layouts/application.html.erb`
+pusherChannel.bind('update', function(data) {
+  console.log('Pusher update')
+  var currentUser = Store.getState().current_user
+  if (data.interested_users.includes(currentUser)) {
+    console.log('youre interested')
+    console.log(data)
+    if (data.message === 'new_conversation') {
+      Store.dispatch(Actions.fetchConversation(data.conversation_id))
+    }
+  }
+})

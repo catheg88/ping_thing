@@ -11,6 +11,13 @@ const Reducer = function ( state = initialState, action ) {
         current_user: action.id
       })
 
+      case 'RECEIVE_CONVERSATION':
+      var newConversations = JSON.parse(JSON.stringify(state.conversations))
+      newConversations.unshift(action.conversation)
+      return Object.assign({}, state, {
+        conversations: newConversations
+      })
+
     case 'RECEIVE_CONVERSATIONS':
       // TODO: handle no conversations
       return Object.assign({}, state, {
@@ -18,7 +25,7 @@ const Reducer = function ( state = initialState, action ) {
       })
 
     case 'RECEIVE_MESSAGES':
-      const newConversations = JSON.parse(JSON.stringify(state.conversations));
+      var newConversations = JSON.parse(JSON.stringify(state.conversations))
       newConversations.forEach( conversation => {
         if (conversation.id === action.conversation_id) {
           conversation.messages = action.messages
