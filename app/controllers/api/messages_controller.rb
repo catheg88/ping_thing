@@ -5,6 +5,10 @@ class Api::MessagesController < ApplicationController
     @messages = Conversation.find(params[:conversation_id]).messages.order(updated_at: :desc)
   end
 
+  def show
+    @message = Message.find(params[:id])
+  end
+
   def create
     puts params
 

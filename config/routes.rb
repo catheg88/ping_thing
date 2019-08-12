@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     resource :current_user, only: [:show]
     resources :conversations, only: [:index, :show, :create] do
-      resources :messages
+      resources :messages, only: [:index, :show, :create]
     end
   end
 

@@ -48,9 +48,10 @@ pusherChannel.bind('update', function(data) {
   console.log('Pusher update')
   var currentUser = Store.getState().current_user
   if (data.interested_users.includes(currentUser)) {
-    console.log('youre interested')
-    console.log(data)
     if (data.message === 'new_conversation') {
+      Store.dispatch(Actions.fetchConversation(data.conversation_id))
+    }
+    if (data.message === 'new_message') {
       Store.dispatch(Actions.fetchConversation(data.conversation_id))
     }
   }

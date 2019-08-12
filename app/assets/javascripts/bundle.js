@@ -2106,10 +2106,11 @@ pusherChannel.bind('update', function (data) {
   var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user;
 
   if (data.interested_users.includes(currentUser)) {
-    console.log('youre interested');
-    console.log(data);
-
     if (data.message === 'new_conversation') {
+      _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
+    }
+
+    if (data.message === 'new_message') {
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
     }
   }
