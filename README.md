@@ -1,36 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
 PingThing is a messaging app with a single page React / Redux frontend and a Rails 5 backend.
 
 
 
 Here are some reasons it's cool:
-* Clean data model that scales well. Database indexes for fast lookups and validations. No silly nonsense like duplicating conversation/message records for each user, storing message recipient IDs in an array and trying to use them for lookups, etc.
+* React Redux frontend runs in a single static page served by the Rails backend. The frontend sends and receives data through a Rails JSON API.
 * Data is stored in the client Redux state once it's been fetched, minimizing unnecessary database queries
-* Real
+* Clean data model that scales well. Database indexes for fast lookups and validations. No silly nonsense like duplicating conversation/message records for each user, storing message recipient IDs in an array and trying to use them for lookups, etc.
+* Real-time updates to receive messages using Pusher
+
+
+
+# Installation
+This app was built using
+* Rails `v5.1.7`
+* Ruby `v2.6.3p62`
+* Postgres `v9.5.1.0`
+* npm `v6.7.0`
+
+To install:
+* Clone this repo:
+`git clone https://github.com/catheg88/ping_thing`
+* `cd` into the root app directory:
+`cd ping_thing`
+* Install the frontend javascript dependencies with `npm`:
+`npm install`
+* SETUP DB
+* CREATE USERS
+
 
 # Data model overview
 
@@ -40,7 +38,15 @@ Here are some reasons it's cool:
 * `User`s are Devise users. Kinda
 
 Additional indexes in the database ensure speedy:
-* Database queries (finding a `User`'s `Conversation`s and finding a `Conversation`'s `User`s)
+* Database queries (e.g. finding a `User`'s `Conversation`s and finding a `Conversation`'s `User`s)
 * Validations (e.g. confirming uniqueness of `ConversationUser` records)
 
-See `db/schema.rb` for the comprehensive database structure.
+See `db/schema.rb` for comprehensive database structure.
+
+
+
+
+Things you may want to cover:
+* Configuration
+* Database creation
+* Database initialization
