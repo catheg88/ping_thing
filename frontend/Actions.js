@@ -7,7 +7,7 @@ const Actions = {
       return axios.get('/api/conversations')
         .then( res => {
           dispatch(Actions.receiveConversations(res.data))
-        } )
+        })
     }
   },
 
@@ -18,11 +18,10 @@ const Actions = {
 
   fetchMessages: conversation_id => {
     return function(dispatch) {
-      return fetch(`/api/conversations/${conversation_id}/messages`)
-        .then( res => res.json() )
+      return axios.get(`/api/conversations/${conversation_id}/messages`)
         .then( res => {
-          dispatch(Actions.receiveMessages(res, conversation_id))
-        } )
+          dispatch(Actions.receiveMessages(res.data, conversation_id))
+        })
     }
   },
 
@@ -32,15 +31,20 @@ const Actions = {
       messages: messages
   }),
 
-  // sendInitialMessage: message => ({
-  //   type: 'SEND_INITIAL_MESSAGE',
-  //   message: message
-  // })
   sendInitialMessage: message => {
-    console.log('message')
-    console.log(message)
     return function(dispatch) {
       return axios.post('/api/conversations', message)
+    }
+  },
+
+  sendReplyMessage: message => {
+    return function(dispatch){
+      return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)
+        .then( res => {
+          console.log('res.data')
+          console.log(res.data)
+          // dispatch(Actions.receiveMessages(res.data, conversation_id))
+        })
     }
   }
 

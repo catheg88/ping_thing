@@ -5,7 +5,6 @@ import Actions from '../Actions.js'
 
 class Message extends React.Component {
   render() {
-    // console.log(this.props.message)
     return (
       <div>
         <div>From: {this.props.message.from}</div>

@@ -1879,10 +1879,8 @@ var Actions = {
   },
   fetchMessages: function fetchMessages(conversation_id) {
     return function (dispatch) {
-      return fetch("/api/conversations/".concat(conversation_id, "/messages")).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        dispatch(Actions.receiveMessages(res, conversation_id));
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id, "/messages")).then(function (res) {
+        dispatch(Actions.receiveMessages(res.data, conversation_id));
       });
     };
   },
@@ -1893,15 +1891,17 @@ var Actions = {
       messages: messages
     };
   },
-  // sendInitialMessage: message => ({
-  //   type: 'SEND_INITIAL_MESSAGE',
-  //   message: message
-  // })
   sendInitialMessage: function sendInitialMessage(message) {
-    console.log('message');
-    console.log(message);
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/conversations', message);
+    };
+  },
+  sendReplyMessage: function sendReplyMessage(message) {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/conversations/".concat(message.conversation_id, "/messages"), message).then(function (res) {
+        console.log('res.data');
+        console.log(res.data); // dispatch(Actions.receiveMessages(res.data, conversation_id))
+      });
     };
   }
 };
@@ -2065,6 +2065,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./frontend/components/Message.jsx");
+/* harmony import */ var _ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ReplyMessageForm */ "./frontend/components/ReplyMessageForm.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2082,6 +2083,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2128,6 +2130,7 @@ function (_React$Component) {
         messageComponents = messages.map(function (message, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
             message: message,
+            conversation_id: _this2.props.conversation.id,
             key: idx
           });
         });
@@ -2135,11 +2138,13 @@ function (_React$Component) {
         messageComponents = null;
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: function onClick() {
           return _this2.handleConversationClick(_this2.props.conversation.id);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), this.props.conversation.participants.join(", "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Date: "), this.props.conversation.updated_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), this.props.conversation.participants.join(", "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents, this.state.expanded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        conversation_id: this.props.conversation.id
+      }) : null));
     }
   }]);
 
@@ -2221,7 +2226,7 @@ function (_React$Component) {
           key: idx
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Messages"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Conversations));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Messages"), Conversations);
     }
   }]);
 
@@ -2296,7 +2301,6 @@ function (_React$Component) {
   _createClass(Message, [{
     key: "render",
     value: function render() {
-      // console.log(this.props.message)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "From: ", this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "At: ", this.props.message.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Message: ", this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "---"));
     }
   }]);
@@ -2442,6 +2446,116 @@ var mapDispatch = function mapDispatch(dispatch) {
 
 NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversation);
 /* harmony default export */ __webpack_exports__["default"] = (NewConversation);
+
+/***/ }),
+
+/***/ "./frontend/components/ReplyMessageForm.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/ReplyMessageForm.jsx ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions */ "./frontend/Actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var ReplyMessageForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ReplyMessageForm, _React$Component);
+
+  function ReplyMessageForm(props) {
+    var _this;
+
+    _classCallCheck(this, ReplyMessageForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ReplyMessageForm).call(this, props));
+    _this.state = {
+      message: "",
+      errors: ""
+    };
+    return _this;
+  }
+
+  _createClass(ReplyMessageForm, [{
+    key: "handleMessageChange",
+    value: function handleMessageChange(e) {
+      e.preventDefault();
+      this.setState({
+        message: e.target.value
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+
+      if (this.state.message === "") {
+        this.setState({
+          errors: "Message cannot be blank"
+        });
+        return;
+      }
+
+      var replyMessageData = {
+        'conversation_id': this.props.conversation_id,
+        'message': this.state.message
+      };
+      this.props.sendReplyMessage(replyMessageData);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit.bind(this)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Reply: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        value: this.state.message,
+        onChange: this.handleMessageChange.bind(this)
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Send"
+      })));
+    }
+  }]);
+
+  return ReplyMessageForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    sendReplyMessage: function sendReplyMessage(replyMessageData) {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_2__["default"].sendReplyMessage(replyMessageData));
+    }
+  };
+};
+
+ReplyMessageForm = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(ReplyMessageForm);
+/* harmony default export */ __webpack_exports__["default"] = (ReplyMessageForm);
 
 /***/ }),
 
