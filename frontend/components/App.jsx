@@ -12,7 +12,6 @@ class App extends React.Component {
   render(){
     return (
       <div id="app">
-        <h1>PingThing</h1>
         <ConversationList />
         <NewConversation />
       </div>

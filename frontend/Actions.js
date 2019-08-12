@@ -39,12 +39,7 @@ const Actions = {
 
   sendReplyMessage: message => {
     return function(dispatch){
-      return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)
-        .then( res => {
-          console.log('res.data')
-          console.log(res.data)
-          // dispatch(Actions.receiveMessages(res.data, conversation_id))
-        })
+      return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)    
     }
   }
 

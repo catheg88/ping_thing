@@ -28,6 +28,11 @@ class ReplyMessageForm extends React.Component {
       'message': this.state.message
     }
     this.props.sendReplyMessage(replyMessageData)
+    this.setState({
+      message: "",
+      errors: ""
+    })
+    // refresh
   }
 
   render() {

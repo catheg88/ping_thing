@@ -1860,7 +1860,7 @@ module.exports = function isBuffer (obj) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
@@ -1898,15 +1898,11 @@ var Actions = {
   },
   sendReplyMessage: function sendReplyMessage(message) {
     return function (dispatch) {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/conversations/".concat(message.conversation_id, "/messages"), message).then(function (res) {
-        console.log('res.data');
-        console.log(res.data); // dispatch(Actions.receiveMessages(res.data, conversation_id))
-      });
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/conversations/".concat(message.conversation_id, "/messages"), message);
     };
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (Actions);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2036,7 +2032,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "PingThing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
 
@@ -2409,6 +2405,12 @@ function (_React$Component) {
         'message': this.state.message
       };
       this.props.sendInitialMessage(initialMessageData);
+      this.setState({
+        to: "",
+        subject: "",
+        message: "",
+        errors: ""
+      }); // refresh
     }
   }, {
     key: "render",
@@ -2527,6 +2529,10 @@ function (_React$Component) {
         'message': this.state.message
       };
       this.props.sendReplyMessage(replyMessageData);
+      this.setState({
+        message: "",
+        errors: ""
+      }); // refresh
     }
   }, {
     key: "render",

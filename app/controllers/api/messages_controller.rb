@@ -16,7 +16,13 @@ class Api::MessagesController < ApplicationController
     )
     if message.save
       puts "message saved"
+    else
+      @errors = message.errors.full_messages
+      render "api/shared/error", status: 422
     end
+
+    # set the conversation's 'updated_at' time so it sorts to the top
+    Conversation.find(params[:conversation_id]).touch
 
   end
 end

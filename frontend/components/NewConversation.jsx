@@ -42,6 +42,13 @@ class NewConversation extends React.Component {
       'message': this.state.message
     }
     this.props.sendInitialMessage(initialMessageData)
+    this.setState({
+      to: "",
+      subject: "",
+      message: "",
+      errors: ""
+    })
+    // refresh
   }
 
   render() {
