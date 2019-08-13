@@ -2,14 +2,20 @@ import axios from 'axios'
 
 const Actions = {
 
-  signIn: () => {
+  logIn: loginData => {
     return function(dispatch) {
       return axios.post('/users/sign_in', {
         user: {
-          login: 'alex',
-          password: 'password'
+          login: loginData.username,
+          password: loginData.password
         }
       })
+    }
+  },
+  
+  logOut: () => {
+    return function(dispatch) {
+      return axios.delete('/users/sign_out')
     }
   },
 

@@ -32,11 +32,9 @@ class ReplyMessageForm extends React.Component {
       message: "",
       errors: ""
     })
-    // refresh
   }
 
   render() {
-
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>

@@ -5,6 +5,7 @@ import { Provider, connect } from 'react-redux'
 import Store from '../Store'
 import Actions from '../Actions'
 
+import LoginForm from './LoginForm'
 import ConversationList from './ConversationList'
 import NewConversation from './NewConversation'
 
@@ -14,6 +15,7 @@ class App extends React.Component {
     return (
       <div id="app">
         <div>Hello, {this.props.current_user.username}</div>
+        <LoginForm />
         <NewConversation />
         <ConversationList />
       </div>
