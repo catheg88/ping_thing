@@ -1867,14 +1867,15 @@ var Actions = {
   fetchUserId: function fetchUserId() {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
-        dispatch(Actions.receiveUser(res.data.id));
+        dispatch(Actions.receiveUser(res.data));
       });
     };
   },
-  receiveUser: function receiveUser(id) {
+  receiveUser: function receiveUser(user) {
     return {
       type: 'RECEIVE_USER',
-      id: id
+      id: user.id,
+      email: user.email
     };
   },
   fetchConversation: function fetchConversation(conversation_id) {
@@ -1955,8 +1956,8 @@ var Actions = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {var initialState = {
-  current_user: '',
+var initialState = {
+  current_user: {},
   conversations: []
 };
 
@@ -1967,7 +1968,10 @@ var Reducer = function Reducer() {
   switch (action.type) {
     case 'RECEIVE_USER':
       return Object.assign({}, state, {
-        current_user: action.id
+        current_user: {
+          id: action.id,
+          email: action.email
+        }
       });
 
     case 'RECEIVE_CONVERSATION':
@@ -1995,8 +1999,6 @@ var Reducer = function Reducer() {
       });
 
     case 'RECEIVE_MESSAGE':
-      console.log('action');
-      console.log(action);
       var newConversations = JSON.parse(JSON.stringify(state.conversations));
       newConversations.forEach(function (conversation) {
         if (conversation.id === action.conversation_id) {
@@ -2012,13 +2014,11 @@ var Reducer = function Reducer() {
       });
 
     default:
-      console.log('default');
       return state;
   }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Reducer);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2101,31 +2101,24 @@ function (_React$Component) {
   }
 
   _createClass(App, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchUserId();
-    }
-  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello, ", this.props.current_user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
 
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var mapDispatch = function mapDispatch(dispatch) {
+var mapState = function mapState(state) {
   return {
-    fetchUserId: function fetchUserId() {
-      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUserId());
-    }
+    current_user: state.current_user
   };
 };
 
-App = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(null, mapDispatch)(App);
+App = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, null)(App);
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: _Store__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -2235,11 +2228,15 @@ function (_React$Component) {
         messageComponents = null;
       }
 
+      var participants = this.props.conversation.participants;
+      participants = participants.filter(function (p) {
+        return p !== _this2.props.current_user.email;
+      }).join(", ");
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: function onClick() {
           return _this2.handleConversationClick(_this2.props.conversation.id);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Date: "), this.props.conversation.updated_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), this.props.conversation.participants.join(", "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents, this.state.expanded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Date: "), this.props.conversation.updated_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents, this.state.expanded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
         conversation_id: this.props.conversation.id
       }) : null));
     }
@@ -2247,6 +2244,12 @@ function (_React$Component) {
 
   return Conversation;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapState = function mapState(state) {
+  return {
+    current_user: state.current_user
+  };
+};
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
@@ -2256,7 +2259,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-Conversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(Conversation);
+Conversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(Conversation);
 /* harmony default export */ __webpack_exports__["default"] = (Conversation);
 
 /***/ }),
@@ -2312,6 +2315,7 @@ function (_React$Component) {
   _createClass(ConversationList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.props.fetchUserId();
       this.props.fetchConversations();
     }
   }, {
@@ -2340,6 +2344,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchConversations: function fetchConversations() {
       dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchConversations());
+    },
+    fetchUserId: function fetchUserId() {
+      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchUserId());
     }
   };
 };

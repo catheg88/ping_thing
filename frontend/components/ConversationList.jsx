@@ -7,6 +7,7 @@ import Conversation from './Conversation'
 
 class ConversationList extends React.Component {
   componentDidMount() {
+    this.props.fetchUserId()
     this.props.fetchConversations()
   }
 
@@ -31,6 +32,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchConversations: () => {
     dispatch(Actions.fetchConversations())
+  },
+  fetchUserId: () => {
+    dispatch(Actions.fetchUserId())
   }
 })
 

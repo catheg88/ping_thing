@@ -10,13 +10,10 @@ import NewConversation from './NewConversation'
 
 class App extends React.Component {
 
-  componentDidMount() {
-    this.props.fetchUserId()
-  }
-
   render() {
     return (
       <div id="app">
+        <div>Hello, {this.props.current_user.email}</div>
         <NewConversation />
         <ConversationList />
       </div>
@@ -24,15 +21,13 @@ class App extends React.Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  fetchUserId: () => {
-    dispatch(Actions.fetchUserId())
-  }
+const mapState = state => ({
+  current_user: state.current_user
 })
 
 App = connect(
-  null,
-  mapDispatch
+  mapState,
+  null
 )(App)
 
 document.addEventListener("DOMContentLoaded", function () {

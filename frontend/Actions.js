@@ -6,14 +6,15 @@ const Actions = {
     return function(dispatch) {
       return axios.get('/api/current_user')
         .then( res => {
-          dispatch(Actions.receiveUser(res.data.id))
+          dispatch(Actions.receiveUser(res.data))
         })
     }
   },
 
-  receiveUser: id => ({
+  receiveUser: user => ({
     type: 'RECEIVE_USER',
-    id: id
+    id: user.id,
+    email: user.email
   }),
 
   fetchConversation: conversation_id => {

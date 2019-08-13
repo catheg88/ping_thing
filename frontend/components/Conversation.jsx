@@ -32,12 +32,16 @@ class Conversation extends React.Component {
       messageComponents = null
     }
 
+    var participants = this.props.conversation.participants
+    participants = participants.filter( p => (p !== this.props.current_user.email))
+                               .join(", ")
+
     return (
       <div>
         <div onClick={ () => this.handleConversationClick(this.props.conversation.id) }>
           <div><b>Date: </b>{this.props.conversation.updated_at}</div>
           <div><b>Subject: </b>{this.props.conversation.subject}</div>
-          <div><b>Participants: </b>{this.props.conversation.participants.join(", ")}</div>
+          <div><b>Participants: </b>{participants}</div>
         </div>
         <ul>
           {messageComponents}
@@ -49,6 +53,10 @@ class Conversation extends React.Component {
 
 }
 
+const mapState = state => ({
+  current_user: state.current_user
+})
+
 const mapDispatch = dispatch => ({
   fetchMessages: (conversation_id) => {
     dispatch(Actions.fetchMessages(conversation_id))
@@ -56,7 +64,7 @@ const mapDispatch = dispatch => ({
 })
 
 Conversation = connect(
-  null,
+  mapState,
   mapDispatch
 )(Conversation)
 
