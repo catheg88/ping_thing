@@ -11,7 +11,7 @@ class Message < ApplicationRecord
     updated_at.strftime("%-m/%-d/%y, %-l:%M %p")
   end
 
-  def from # temporary method, most likely
-    User.find(user_id).email
+  def from
+    User.find(user_id).username
   end
 end

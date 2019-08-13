@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const Actions = {
 
-  fetchUserId: () => {
+  fetchUser: () => {
     return function(dispatch) {
       return axios.get('/api/current_user')
         .then( res => {
@@ -10,10 +10,10 @@ const Actions = {
         })
     }
   },
-
   receiveUser: user => ({
     type: 'RECEIVE_USER',
     id: user.id,
+    username: user.username,
     email: user.email
   }),
 
@@ -25,7 +25,6 @@ const Actions = {
       })
     }
   },
-
   receiveConversation: conversation => ({
     type: 'RECEIVE_CONVERSATION',
     conversation: conversation
@@ -39,7 +38,6 @@ const Actions = {
         })
     }
   },
-
   receiveConversations: conversations => ({
     type: 'RECEIVE_CONVERSATIONS',
     conversations: conversations
@@ -53,7 +51,6 @@ const Actions = {
         })
     }
   },
-
   receiveMessage: (message, conversation_id) => ({
       type: 'RECEIVE_MESSAGE',
       conversation_id: conversation_id,
@@ -68,7 +65,6 @@ const Actions = {
         })
     }
   },
-
   receiveMessages: (messages, conversation_id) => ({
       type: 'RECEIVE_MESSAGES',
       conversation_id: conversation_id,

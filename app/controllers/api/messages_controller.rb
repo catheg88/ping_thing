@@ -3,6 +3,7 @@ class Api::MessagesController < ApplicationController
 
   def index
     @messages = Conversation.find(params[:conversation_id]).messages.order(updated_at: :desc)
+    puts @messages
   end
 
   def show
@@ -10,8 +11,6 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
-    puts params
-
     # save conversation message
     message = Message.new(
       conversation_id: params[:conversation_id],
@@ -20,7 +19,7 @@ class Api::MessagesController < ApplicationController
     )
     if message.save
       puts "message saved"
-    else
+    else # TODO: error handling for other controllers
       @errors = message.errors.full_messages
       render "api/shared/error", status: 422
     end

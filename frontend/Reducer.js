@@ -10,6 +10,7 @@ const Reducer = function ( state = initialState, action ) {
       return Object.assign({}, state, {
         current_user: {
           id: action.id,
+          username: action.username,
           email: action.email
         }
       })
@@ -40,17 +41,25 @@ const Reducer = function ( state = initialState, action ) {
 
     case 'RECEIVE_MESSAGE':
       var newConversations = JSON.parse(JSON.stringify(state.conversations))
-      newConversations.forEach( conversation => {
+      var conversationIndex = null
+      newConversations.forEach( (conversation, idx) => {
         if (conversation.id === action.conversation_id) {
           conversation.updated_at = action.message.updated_at
+          conversationIndex = idx
           if (conversation.messages) {
             conversation.messages.unshift(action.message)
           }
         }
       })
 
+      // rebuilds conversation array so the updated conversation is first
+      var updatedConversation = newConversations.slice(conversationIndex, conversationIndex + 1)
+      var arrStart = newConversations.slice(0, conversationIndex)
+      var arrEnd = newConversations.slice(conversationIndex + 1, newConversations.length)
+      var reorderedConversations = updatedConversation.concat(arrStart).concat(arrEnd)
+
       return Object.assign({}, state, {
-        conversations: newConversations
+        conversations: reorderedConversations
       })
 
     default:

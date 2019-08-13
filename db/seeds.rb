@@ -8,6 +8,7 @@
 
 User.create(username: 'alex', email: 'alex@test.com', password: 'password', password_confirmation: 'password')
 User.create(username: 'taylor', email: 'taylor@test.com', password: 'password', password_confirmation: 'password')
+User.create(username: 'jim', email: 'jim@test.com', password: 'password', password_confirmation: 'password')
 
 Conversation.create(user_id: 1, subject: "this is a's message thread", created_at: '2019-08-10 19:12:33', updated_at: '2019-08-10 19:12:33')
 Message.create(conversation_id: 1, user_id: 1, body: "a's 1st message", created_at: '2019-08-10 19:12:33', updated_at: '2019-08-10 19:12:33')
@@ -19,3 +20,9 @@ Conversation.create(user_id: 2, subject: "this is t's message thread", created_a
 Message.create(conversation_id: 2, user_id: 2, body: "t's 1st message", created_at: '2019-08-06 01:04:44', updated_at: '2019-08-06 01:04:44')
 ConversationUser.create(conversation_id: 2, user_id: 1)
 ConversationUser.create(conversation_id: 2, user_id: 2)
+
+Conversation.create(user_id: 3, subject: "this is j's message thread", created_at: '2019-06-26 04:54:25', updated_at: '2019-06-26 04:54:25')
+Message.create(conversation_id: 3, user_id: 3, body: "jim is alive", created_at: '2019-06-26 04:54:25', updated_at: '2019-06-26 04:54:25')
+ConversationUser.create(conversation_id: 3, user_id: 1)
+ConversationUser.create(conversation_id: 3, user_id: 2)
+ConversationUser.create(conversation_id: 3, user_id: 3)

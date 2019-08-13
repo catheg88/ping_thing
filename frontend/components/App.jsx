@@ -13,7 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="app">
-        <div>Hello, {this.props.current_user.email}</div>
+        <div>Hello, {this.props.current_user.username}</div>
         <NewConversation />
         <ConversationList />
       </div>

@@ -20,6 +20,7 @@ class Conversation extends React.Component {
   }
 
   render() {
+    console.log('conversation render')
     var messageComponents = null
     const messages = this.props.conversation.messages
     if (messages && this.state.expanded) {
@@ -33,7 +34,7 @@ class Conversation extends React.Component {
     }
 
     var participants = this.props.conversation.participants
-    participants = participants.filter( p => (p !== this.props.current_user.email))
+    participants = participants.filter( p => (p !== this.props.current_user.username))
                                .join(", ")
 
     return (
@@ -45,7 +46,7 @@ class Conversation extends React.Component {
         </div>
         <ul>
           {messageComponents}
-          {this.state.expanded ? <ReplyMessageForm conversation_id={this.props.conversation.id}/> : null}
+          {this.state.expanded ? <ReplyMessageForm conversation_id={this.props.conversation.id} /> : null}
         </ul>
       </div>
     )

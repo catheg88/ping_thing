@@ -13,7 +13,7 @@ class Api::ConversationsController < ApplicationController
         "updated_at" => c.conversation_updated_at
       }
       c.users.each do |u|
-        conversation["participants"] << u.email
+        conversation["participants"] << u.username
       end
       @conversations << conversation
     end
@@ -22,16 +22,30 @@ class Api::ConversationsController < ApplicationController
 
   def show
     conversation = Conversation.find(params[:id])
-    @conversation = {
-      "id" => conversation.id,
-      "subject" => conversation.subject,
-      "participants" => [],
-      "created_at" => conversation.conversation_created_at,
-      "updated_at" => conversation.conversation_updated_at
-    }
+
+    current_user_is_participant = false
     conversation.users.each do |u|
-      @conversation["participants"] << u.email
+      if u.username == current_user.username
+          current_user_is_participant = true
+      end
     end
+
+    if current_user_is_participant == true
+      @conversation = {
+        "id" => conversation.id,
+        "subject" => conversation.subject,
+        "participants" => [],
+        "created_at" => conversation.conversation_created_at,
+        "updated_at" => conversation.conversation_updated_at
+      }
+      conversation.users.each do |u|
+        @conversation["participants"] << u.username
+      end
+    else
+      @errors = "Current user does not have access to conversation"
+      render "api/shared/error", status: 401
+    end
+
   end
 
   def create
@@ -57,10 +71,10 @@ class Api::ConversationsController < ApplicationController
 
     # save conversation assoc with other users, taken from parsing the 'to' line
     params[:to].split(' ').each do |user|
-      if User.find_by(email: user)
+      if User.find_by(username: user)
         recipient_user_assoc = ConversationUser.new(
           conversation_id: conversation.id,
-          user_id: User.find_by(email: user).id
+          user_id: User.find_by(username: user).id
         )
 
         if recipient_user_assoc.save
@@ -82,10 +96,6 @@ class Api::ConversationsController < ApplicationController
     end
 
     puts logs
-    # else
-    #   @errors = conversation.errors.full_messages
-    #   render "api/shared/error", status: 422
-    # end
 
     # find who needs to know and send pusher update
     interested_users = []
