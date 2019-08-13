@@ -2,12 +2,29 @@ class Api::MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @messages = Conversation.find(params[:conversation_id]).messages.order(updated_at: :desc)
-    puts @messages
+    conversation = Conversation.find(params[:conversation_id])
+
+    current_user_is_participant = false
+    conversation.users.each do |u|
+      if u.username == current_user.username
+          current_user_is_participant = true
+      end
+    end
+
+    if current_user_is_participant == true
+      @messages = conversation.messages.order(updated_at: :desc)
+    else
+      @errors = "Current user does not have access to conversation"
+      render "api/shared/error", status: 401
+    end
+
   end
 
   def show
     @message = Message.find(params[:id])
+
+    puts 'Message.conversation'
+    puts Message.conversation
   end
 
   def create
