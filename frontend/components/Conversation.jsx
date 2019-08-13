@@ -20,7 +20,6 @@ class Conversation extends React.Component {
   }
 
   render() {
-    console.log('conversation render')
     var messageComponents = null
     const messages = this.props.conversation.messages
     if (messages && this.state.expanded) {

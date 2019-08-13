@@ -10,9 +10,12 @@ const Actions = {
           password: loginData.password
         }
       })
+        .then( res => {
+          dispatch(Actions.fetchUser())
+        })
     }
   },
-  
+
   logOut: () => {
     return function(dispatch) {
       return axios.delete('/users/sign_out')
@@ -24,9 +27,16 @@ const Actions = {
       return axios.get('/api/current_user')
         .then( res => {
           dispatch(Actions.receiveUser(res.data))
+        }).catch( error => {
+          dispatch(Actions.receiveUser({
+            id: "unauthorized",
+            username: "",
+            email: "unauthorized"
+          }))
         })
     }
   },
+
   receiveUser: user => ({
     type: 'RECEIVE_USER',
     id: user.id,

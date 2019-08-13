@@ -10,11 +10,15 @@ import ConversationList from './ConversationList'
 import NewConversation from './NewConversation'
 
 class App extends React.Component {
+  componentDidMount(){
+    // console.log('App cdm this.props.current_user')
+    // console.log(this.props.current_user.username)
+  }
 
   render() {
     return (
       <div id="app">
-        <div>Hello, {this.props.current_user.username}</div>
+        <div>Hello {this.props.current_user.username}</div>
         <LoginForm />
         <NewConversation />
         <ConversationList />

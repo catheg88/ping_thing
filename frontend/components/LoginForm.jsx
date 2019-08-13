@@ -36,6 +36,10 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    var errors = null
+    if (this.props.current_user === 'unauthorized') {
+      errors = <div>Login failed</div>
+    }
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -57,10 +61,15 @@ class LoginForm extends React.Component {
           <input type="submit" value="Login" />
           <button type="button"onClick={this.props.logOut}>Logout</button>
         </form>
+        {errors}
       </div>
     )
   }
 }
+
+const mapState = state => ({
+  current_user: state.current_user.id
+})
 
 const mapDispatch = dispatch => ({
   submitLogin: loginData => {
@@ -72,7 +81,7 @@ const mapDispatch = dispatch => ({
 })
 
 LoginForm = connect(
-  null,
+  mapState,
   mapDispatch
 )(LoginForm)
 

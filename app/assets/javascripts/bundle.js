@@ -1871,6 +1871,8 @@ var Actions = {
           login: loginData.username,
           password: loginData.password
         }
+      }).then(function (res) {
+        dispatch(Actions.fetchUser());
       });
     };
   },
@@ -1883,6 +1885,12 @@ var Actions = {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
         dispatch(Actions.receiveUser(res.data));
+      })["catch"](function (error) {
+        dispatch(Actions.receiveUser({
+          id: "unauthorized",
+          username: "",
+          email: "unauthorized"
+        }));
       });
     };
   },
@@ -2064,8 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var Store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_Reducer__WEBPACK_IMPORTED_MODULE_1__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])( // createLogger(),
-redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"]));
+var Store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_Reducer__WEBPACK_IMPORTED_MODULE_1__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(Object(redux_logger__WEBPACK_IMPORTED_MODULE_3__["createLogger"])(), redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"]));
 /* harmony default export */ __webpack_exports__["default"] = (Store);
 
 /***/ }),
@@ -2128,11 +2135,16 @@ function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {// console.log('App cdm this.props.current_user')
+      // console.log(this.props.current_user.username)
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello, ", this.props.current_user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.current_user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null));
     }
   }]);
 
@@ -2179,7 +2191,7 @@ pusherChannel.bind('update', function (data) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
@@ -2242,7 +2254,6 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log('conversation render');
       var messageComponents = null;
       var messages = this.props.conversation.messages;
 
@@ -2291,7 +2302,6 @@ var mapDispatch = function mapDispatch(dispatch) {
 
 Conversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(Conversation);
 /* harmony default export */ __webpack_exports__["default"] = (Conversation);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2346,8 +2356,6 @@ function (_React$Component) {
   _createClass(ConversationList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUser(); // this.props.signIn()
-
       this.props.fetchConversations();
     }
   }, {
@@ -2376,13 +2384,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchConversations: function fetchConversations() {
       dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchConversations());
-    },
-    fetchUser: function fetchUser() {
-      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchUser());
-    } // signIn: () => {
-    //   dispatch(Actions.signIn())
-    // }
-
+    }
   };
 };
 
@@ -2477,6 +2479,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var errors = null;
+
+      if (this.props.current_user === 'unauthorized') {
+        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Login failed");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Username: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -2493,12 +2501,18 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.props.logOut
-      }, "Logout")));
+      }, "Logout")), errors);
     }
   }]);
 
   return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapState = function mapState(state) {
+  return {
+    current_user: state.current_user.id
+  };
+};
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
@@ -2511,7 +2525,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-LoginForm = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(LoginForm);
+LoginForm = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(LoginForm);
 /* harmony default export */ __webpack_exports__["default"] = (LoginForm);
 
 /***/ }),
