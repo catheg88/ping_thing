@@ -1,13 +1,11 @@
 # README
 
-PingThing is a messaging app with a single page React / Redux frontend and a Rails 5 backend.
+PingThing is a messaging app with a single page React / Redux frontend and a Rails 5 backend. The frontend sends and retrieves data via a Rails JSON API.
 
 Here are some ways it's cooler than it looks:
-* React Redux frontend runs in a single static page served by the Rails backend. The frontend sends and receives data through a Rails JSON API
-* Data is stored in the client Redux state once it's been fetched, minimizing unnecessary database queries
+* Data is stored in the client Redux state once it's been fetched, minimizing unnecessary database queries.
+* Real-time updates to receive messages using Pusher/websockets. Only affected users respond to each Pusher notification, and they grab only the new data they don't have from the database.
 * Clean data model that scales well. Database indexes for fast lookups and validations. No silly nonsense like duplicating conversation/message records for each user, storing message recipient IDs in an array and trying to use them for lookups, etc.
-* Real-time updates to receive messages using Pusher
-  * 
 
 # Installation
 This app was built using
@@ -26,8 +24,7 @@ To install:
 * TODO: SETUP DB
 * TODO: CREATE USERS
 
-# Data model summary
-
+# Data model overview
 * `Conversation` records belong to a `user` (the creator) and a conversation `subject`
 * `Message` records store the message `body` text, the author's `user_id`, and a `conversation_id` so they know which conversation they belong to
 * `Conversation`s are associated with users through a `ConversationUser` table, which stores pairs of `user_id`s and `conversation_id`s. The user and their conversation models are linked by a `has many... through` association through this table.
