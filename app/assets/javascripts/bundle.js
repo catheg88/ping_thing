@@ -2054,7 +2054,7 @@ var Store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_Reducer__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
@@ -2128,16 +2128,18 @@ document.addEventListener("DOMContentLoaded", function () {
 pusherChannel.bind('update', function (data) {
   var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user; // interested users array calculated by controller and sent in pusher message
 
-  if (data.interested_users.includes(currentUser)) {
+  if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
     }
 
     if (data.message === 'new_message') {
+      console.log('pusher new_message');
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchMessage(data.message_id, data.conversation_id));
     }
   }
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
