@@ -11,7 +11,7 @@ import NewConversation from './NewConversation'
 class App extends React.Component {
 
   componentDidMount() {
-    this.props.getUser()
+    this.props.fetchUserId()
   }
 
   render() {
@@ -25,8 +25,8 @@ class App extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-  getUser: () => {
-    dispatch(Actions.getUser())
+  fetchUserId: () => {
+    dispatch(Actions.fetchUserId())
   }
 })
 
@@ -45,14 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // pusherChannel provided from rails `app/views/layouts/application.html.erb`
 pusherChannel.bind('update', function(data) {
-  console.log('Pusher update')
   var currentUser = Store.getState().current_user
+  // interested users array calculated by controller and sent in pusher message
   if (data.interested_users.includes(currentUser)) {
     if (data.message === 'new_conversation') {
       Store.dispatch(Actions.fetchConversation(data.conversation_id))
     }
     if (data.message === 'new_message') {
-      Store.dispatch(Actions.fetchConversation(data.conversation_id))
+      Store.dispatch(Actions.fetchMessage(data.message_id, data.conversation_id))
     }
   }
 })

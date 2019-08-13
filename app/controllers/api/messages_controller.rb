@@ -25,8 +25,22 @@ class Api::MessagesController < ApplicationController
       render "api/shared/error", status: 422
     end
 
+    conversation = Conversation.find(params[:conversation_id])
     # set the conversation's 'updated_at' time so it sorts to the top
-    Conversation.find(params[:conversation_id]).touch
+    conversation.touch
 
+    # find who needs to know and send pusher update
+    interested_users = []
+    conversation.users.each do |u|
+      interested_users << u.id
+    end
+    puts interested_users
+
+    Pusher.trigger('ping_channel', 'update', {
+      message: 'new_message',
+      interested_users: interested_users,
+      message_id: message.id,
+      conversation_id: conversation.id
+    })
   end
 end

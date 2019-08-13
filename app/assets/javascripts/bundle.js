@@ -1864,7 +1864,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
-  getUser: function getUser() {
+  fetchUserId: function fetchUserId() {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
         dispatch(Actions.receiveUser(res.data.id));
@@ -1875,6 +1875,19 @@ var Actions = {
     return {
       type: 'RECEIVE_USER',
       id: id
+    };
+  },
+  fetchConversation: function fetchConversation(conversation_id) {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id)).then(function (res) {
+        dispatch(Actions.receiveConversation(res.data));
+      });
+    };
+  },
+  receiveConversation: function receiveConversation(conversation) {
+    return {
+      type: 'RECEIVE_CONVERSATION',
+      conversation: conversation
     };
   },
   fetchConversations: function fetchConversations() {
@@ -1890,17 +1903,18 @@ var Actions = {
       conversations: conversations
     };
   },
-  fetchConversation: function fetchConversation(conversation_id) {
+  fetchMessage: function fetchMessage(message_id, conversation_id) {
     return function (dispatch) {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id)).then(function (res) {
-        dispatch(Actions.receiveConversation(res.data));
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id, "/messages/").concat(message_id)).then(function (res) {
+        dispatch(Actions.receiveMessage(res.data, conversation_id));
       });
     };
   },
-  receiveConversation: function receiveConversation(conversation) {
+  receiveMessage: function receiveMessage(message, conversation_id) {
     return {
-      type: 'RECEIVE_CONVERSATION',
-      conversation: conversation
+      type: 'RECEIVE_MESSAGE',
+      conversation_id: conversation_id,
+      message: message
     };
   },
   fetchMessages: function fetchMessages(conversation_id) {
@@ -1980,6 +1994,23 @@ var Reducer = function Reducer() {
         conversations: newConversations
       });
 
+    case 'RECEIVE_MESSAGE':
+      console.log('action');
+      console.log(action);
+      var newConversations = JSON.parse(JSON.stringify(state.conversations));
+      newConversations.forEach(function (conversation) {
+        if (conversation.id === action.conversation_id) {
+          conversation.updated_at = action.message.updated_at;
+
+          if (conversation.messages) {
+            conversation.messages.unshift(action.message);
+          }
+        }
+      });
+      return Object.assign({}, state, {
+        conversations: newConversations
+      });
+
     default:
       console.log('default');
       return state;
@@ -2023,7 +2054,7 @@ var Store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_Reducer__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
@@ -2072,7 +2103,7 @@ function (_React$Component) {
   _createClass(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.getUser();
+      this.props.fetchUserId();
     }
   }, {
     key: "render",
@@ -2088,8 +2119,8 @@ function (_React$Component) {
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    getUser: function getUser() {
-      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].getUser());
+    fetchUserId: function fetchUserId() {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUserId());
     }
   };
 };
@@ -2102,8 +2133,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }); // pusherChannel provided from rails `app/views/layouts/application.html.erb`
 
 pusherChannel.bind('update', function (data) {
-  console.log('Pusher update');
-  var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user;
+  var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user; // interested users array calculated by controller and sent in pusher message
 
   if (data.interested_users.includes(currentUser)) {
     if (data.message === 'new_conversation') {
@@ -2111,11 +2141,10 @@ pusherChannel.bind('update', function (data) {
     }
 
     if (data.message === 'new_message') {
-      _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
+      _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchMessage(data.message_id, data.conversation_id));
     }
   }
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 

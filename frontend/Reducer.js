@@ -31,6 +31,22 @@ const Reducer = function ( state = initialState, action ) {
           conversation.messages = action.messages
         }
       })
+      return Object.assign({}, state, {
+        conversations: newConversations
+      })
+
+    case 'RECEIVE_MESSAGE':
+      console.log('action')
+      console.log(action)
+      var newConversations = JSON.parse(JSON.stringify(state.conversations))
+      newConversations.forEach( conversation => {
+        if (conversation.id === action.conversation_id) {
+          conversation.updated_at = action.message.updated_at
+          if (conversation.messages) {
+            conversation.messages.unshift(action.message)
+          }
+        }
+      })
 
       return Object.assign({}, state, {
         conversations: newConversations

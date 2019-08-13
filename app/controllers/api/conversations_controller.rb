@@ -87,7 +87,7 @@ class Api::ConversationsController < ApplicationController
     #   render "api/shared/error", status: 422
     # end
 
-    # package up who needs to know and send pusher update
+    # find who needs to know and send pusher update
     interested_users = []
     conversation.users.each do |u|
       interested_users << u.id
