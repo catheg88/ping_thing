@@ -1864,6 +1864,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
+  signIn: function signIn() {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/users/sign_in', {
+        user: {
+          login: 'alex',
+          password: 'password'
+        }
+      });
+    };
+  },
   fetchUser: function fetchUser() {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
@@ -2329,7 +2339,8 @@ function (_React$Component) {
   _createClass(ConversationList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUser();
+      this.props.fetchUser(); // this.props.signIn()
+
       this.props.fetchConversations();
     }
   }, {
@@ -2361,7 +2372,10 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     fetchUser: function fetchUser() {
       dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchUser());
-    }
+    } // signIn: () => {
+    //   dispatch(Actions.signIn())
+    // }
+
   };
 };
 

@@ -8,6 +8,7 @@ import Conversation from './Conversation'
 class ConversationList extends React.Component {
   componentDidMount() {
     this.props.fetchUser()
+    // this.props.signIn()
     this.props.fetchConversations()
   }
 
@@ -35,7 +36,10 @@ const mapDispatch = dispatch => ({
   },
   fetchUser: () => {
     dispatch(Actions.fetchUser())
-  }
+  },
+  // signIn: () => {
+  //   dispatch(Actions.signIn())
+  // }
 })
 
 ConversationList = connect(

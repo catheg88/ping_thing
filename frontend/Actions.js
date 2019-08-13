@@ -2,6 +2,17 @@ import axios from 'axios'
 
 const Actions = {
 
+  signIn: () => {
+    return function(dispatch) {
+      return axios.post('/users/sign_in', {
+        user: {
+          login: 'alex',
+          password: 'password'
+        }
+      })
+    }
+  },
+
   fetchUser: () => {
     return function(dispatch) {
       return axios.get('/api/current_user')
