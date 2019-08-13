@@ -3,6 +3,8 @@ class Api::ConversationsController < ApplicationController
 
   def index
     conversations_records = User.find(current_user.id).conversations.all.order(updated_at: :desc)
+
+    # calculate and add a 'participants' field to the api response
     @conversations = []
     conversations_records.each do |c|
       conversation = {
@@ -17,12 +19,11 @@ class Api::ConversationsController < ApplicationController
       end
       @conversations << conversation
     end
-
   end
 
   def show
+    # ensure user is allowed to see response
     conversation = Conversation.find(params[:id])
-
     current_user_is_participant = false
     conversation.users.each do |u|
       if u.username == current_user.username
@@ -42,21 +43,23 @@ class Api::ConversationsController < ApplicationController
         @conversation["participants"] << u.username
       end
     else
-      @errors = "Current user does not have access to conversation"
+      @errors = "Current user does not have access to this conversation."
       render "api/shared/error", status: 401
     end
 
   end
 
   def create
-    logs = []
+
     conversation = Conversation.new(
       user_id: current_user.id,
       subject: params[:subject]
     )
     if conversation.save
-      # puts 'conversation saved'
-      logs << 'conversation saved'
+      puts 'Conversation saved'
+    else
+      @errors = message.errors.full_messages
+      render "api/shared/error", status: 422
     end
 
     # save conversation assoc with creator
@@ -65,22 +68,27 @@ class Api::ConversationsController < ApplicationController
       user_id: current_user.id
     )
     if owner_user_assoc.save
-      # puts 'owner user associated'
-      logs << 'owner user associated'
+      puts "Owner \"#{current_user.username}\" association saved"
+    else
+      @errors = message.errors.full_messages
+      render "api/shared/error", status: 422
     end
 
-    # save conversation assoc with other users, taken from parsing the 'to' line
-    params[:to].split(' ').each do |user|
-      if User.find_by(username: user)
+    # save conversation assoc with other users
+    params[:to].split(' ').each do |u| # TODO: update this
+      if User.find_by(username: u)
         recipient_user_assoc = ConversationUser.new(
           conversation_id: conversation.id,
-          user_id: User.find_by(username: user).id
+          user_id: User.find_by(username: u).id
         )
-
         if recipient_user_assoc.save
-          # puts "recipient_user_assoc saved"
-          logs << "recipient_user_assoc saved"
+          puts "Recipient \"#{u}\" association saved"
+        else
+          @errors = message.errors.full_messages
+          render "api/shared/error", status: 422
         end
+      else
+        puts "user \"#{u}\" not found"
       end
     end
 
@@ -91,13 +99,13 @@ class Api::ConversationsController < ApplicationController
       body: params[:message]
     )
     if message.save
-      # puts "message saved"
-      logs << "message saved"
+      puts "Message saved"
+    else
+      @errors = message.errors.full_messages
+      render "api/shared/error", status: 422
     end
 
-    puts logs
-
-    # find who needs to know and send pusher update
+    # decide who needs to know and send pusher update
     interested_users = []
     conversation.users.each do |u|
       interested_users << u.id

@@ -2,8 +2,8 @@ class Api::MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    # ensure user is allowed to see response
     conversation = Conversation.find(params[:conversation_id])
-
     current_user_is_participant = false
     conversation.users.each do |u|
       if u.username == current_user.username
@@ -14,17 +14,28 @@ class Api::MessagesController < ApplicationController
     if current_user_is_participant == true
       @messages = conversation.messages.order(updated_at: :desc)
     else
-      @errors = "Current user does not have access to conversation"
+      @errors = "Current user does not have access to this conversation's messages."
       render "api/shared/error", status: 401
     end
 
   end
 
   def show
-    @message = Message.find(params[:id])
+    # ensure user is allowed to see response
+    conversation_users = Message.find(params[:id]).conversation.users
+    current_user_is_participant = false
+    conversation_users.each do |u|
+      if u.username == current_user.username
+          current_user_is_participant = true
+      end
+    end
 
-    puts 'Message.conversation'
-    puts Message.conversation
+    if current_user_is_participant == true
+      @message = Message.find(params[:id])
+    else
+      @errors = "Current user does not have access to this message's conversation."
+      render "api/shared/error", status: 401
+    end
   end
 
   def create
@@ -35,17 +46,16 @@ class Api::MessagesController < ApplicationController
       body: params[:message]
     )
     if message.save
-      puts "message saved"
+      puts "Message saved"
     else # TODO: error handling for other controllers
       @errors = message.errors.full_messages
       render "api/shared/error", status: 422
     end
 
-    conversation = Conversation.find(params[:conversation_id])
-    # set the conversation's 'updated_at' time so it sorts to the top
-    conversation.touch
+    # update conversation's 'updated_at' time
+    Conversation.find(params[:conversation_id]).touch
 
-    # find who needs to know and send pusher update
+    # decide who needs to know and send pusher update
     interested_users = []
     conversation.users.each do |u|
       interested_users << u.id
@@ -59,4 +69,5 @@ class Api::MessagesController < ApplicationController
       conversation_id: conversation.id
     })
   end
+
 end
