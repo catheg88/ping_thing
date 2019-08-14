@@ -2176,7 +2176,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.currentUser.username), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null);
     }
   }]);
 
@@ -2186,8 +2186,7 @@ function (_React$Component) {
 var mapState = function mapState(state) {
   return {
     currentUser: state.currentUser,
-    loggedIn: state.loggedIn,
-    awaitUser: state.awaitUser
+    loggedIn: state.loggedIn
   };
 };
 
@@ -2529,23 +2528,53 @@ function (_React$Component) {
         errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "user ", this.props.currentUser, "...");
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button",
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "navbar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "logo"
+      }, "PingThing"), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "login-logout",
         onClick: this.props.logOut
-      }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Username: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "navbar-right"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "login-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Username: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.username,
         onChange: this.handleUsernameChange.bind(this)
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
         onChange: this.handlePasswordChange.bind(this)
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Login"
-      }), errors));
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "login-logout",
+        onClick: this.handleSubmit.bind(this)
+      }, "Login"), errors)); // return (
+      //   <div id="navbar">
+      //     <div id="logo">PingThing</div>
+      //     {this.props.loggedIn ?
+      //       <button type="button" onClick={this.props.logOut}>Logout</button>
+      //       :
+      //       <form onSubmit={this.handleSubmit.bind(this)}>
+      //         <label>
+      //           <span>Username: </span>
+      //           <input type="text"
+      //             value={this.state.username}
+      //             onChange={this.handleUsernameChange.bind(this)} />
+      //         </label>
+      //         <label>
+      //           <span>Password: </span>
+      //           <input type="password"
+      //             value={this.state.password}
+      //             onChange={this.handlePasswordChange.bind(this)} />
+      //         </label>
+      //         <input type="submit" value="Login" />
+      //         {errors}
+      //       </form>
+      //     }
+      //   </div>
+      // )
     }
   }]);
 

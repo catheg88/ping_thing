@@ -45,29 +45,65 @@ class LoginForm extends React.Component {
       errors = <div>user {this.props.currentUser}...</div>
     }
     return (
-      <div>
-      {this.props.loggedIn ?
-        <button type="button"onClick={this.props.logOut}>Logout</button>
-        :
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <label>
-            <span>Username: </span>
-            <input type="text"
-              value={this.state.username}
-              onChange={this.handleUsernameChange.bind(this)} />
-          </label>
-          <label>
-            <span>Password: </span>
-            <input type="password"
-              value={this.state.password}
-              onChange={this.handlePasswordChange.bind(this)} />
-          </label>
-          <input type="submit" value="Login" />
-          {errors}
-        </form>
-      }
+      <div id="navbar">
+        <div id="logo">PingThing</div>
+        {this.props.loggedIn ?
+          <div id="login-logout" onClick={this.props.logOut}>
+            Logout
+          </div>
+          :
+            <div id="navbar-right">
+              <div id="login-form">
+                <div>
+                  <span>Username: </span>
+                  <span>
+                    <input type="text"
+                           value={this.state.username}
+                           onChange={this.handleUsernameChange.bind(this)}
+                    />
+                  </span>
+                </div>
+                <div>
+                  <span>Password: </span>
+                  <input type="password"
+                    value={this.state.password}
+                    onChange={this.handlePasswordChange.bind(this)}
+                  />
+                </div>
+              </div>
+              <div id="login-logout" onClick={this.handleSubmit.bind(this)}>
+                Login
+              </div>
+              {errors}
+            </div>
+        }
       </div>
     )
+    // return (
+    //   <div id="navbar">
+    //     <div id="logo">PingThing</div>
+    //     {this.props.loggedIn ?
+    //       <button type="button" onClick={this.props.logOut}>Logout</button>
+    //       :
+    //       <form onSubmit={this.handleSubmit.bind(this)}>
+    //         <label>
+    //           <span>Username: </span>
+    //           <input type="text"
+    //             value={this.state.username}
+    //             onChange={this.handleUsernameChange.bind(this)} />
+    //         </label>
+    //         <label>
+    //           <span>Password: </span>
+    //           <input type="password"
+    //             value={this.state.password}
+    //             onChange={this.handlePasswordChange.bind(this)} />
+    //         </label>
+    //         <input type="submit" value="Login" />
+    //         {errors}
+    //       </form>
+    //     }
+    //   </div>
+    // )
   }
 }
 
