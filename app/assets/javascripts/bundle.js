@@ -2524,8 +2524,10 @@ function (_React$Component) {
     value: function render() {
       var errors = null;
 
-      if (this.props.currentUser.username === 'unauthorized' && this.state.tried === true && this.state.awaitUser === false) {
-        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "user ", this.props.currentUser.username, "...");
+      if (this.props.currentUser.username === 'unauthorized' && this.state.tried === true && this.props.awaitUser === false) {
+        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "login-error"
+        }, "user ", this.props.currentUser.username, "...");
       }
 
       var displayName = this.props.currentUser.username;
@@ -2549,14 +2551,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logo"
       }, "PingThing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "godzilla"
-      }, navbarRight, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "navbar-right-container"
+      }, navbarRight, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, errors), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-logout",
         onClick: this.props.logOut
       }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-logout",
         onClick: this.handleSubmit.bind(this)
-      }, "Login")), errors); // return (
+      }, "Login"))); // return (
       //   <div id="navbar">
       //     <div id="logo">PingThing</div>
       //     {this.props.loggedIn ?

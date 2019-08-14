@@ -41,8 +41,8 @@ class LoginForm extends React.Component {
     var errors = null
     if (this.props.currentUser.username === 'unauthorized' &&
         this.state.tried === true &&
-        this.state.awaitUser === false) {
-      errors = <div>user {this.props.currentUser.username}...</div>
+        this.props.awaitUser === false) {
+      errors = <div id="login-error">user {this.props.currentUser.username}...</div>
     }
 
     var displayName = this.props.currentUser.username
@@ -73,10 +73,9 @@ class LoginForm extends React.Component {
     return (
       <div id="navbar">
         <div id="logo">PingThing</div>
-
-
-        <div id="godzilla">
+        <div id="navbar-right-container">
           {navbarRight}
+          <div>{errors}</div>
           { this.props.loggedIn ?
             <div id="login-logout" onClick={this.props.logOut}>
               Logout
@@ -86,9 +85,6 @@ class LoginForm extends React.Component {
               Login
             </div> }
         </div>
-
-
-        {errors}
       </div>
     )
     // return (

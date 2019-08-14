@@ -26,7 +26,7 @@ html {
 body {
   margin: 0;
   height: 100%;
-  border: 1px
+  /* border: 1px */
 }
 
 #navbar {
@@ -45,7 +45,7 @@ body {
   justify-content: center;
   align-items: center;
   border-right: 2px solid #51728E;
-  font-weight: 700;
+  /* font-weight: 700; */
   padding: 10px 20px;
 }
 
@@ -62,18 +62,22 @@ body {
   padding-left: 5px; */
 }
 
-#godzilla {
+#navbar-right-container {
   display: flex;
+  align-items: center;
 }
 
-#godzilla > div {
+#navbar-right-container > div {
   display: flex;
 }
 
 #navbar-right {
-  align-items: center;
   justify-content: flex-end;
-  padding-right: 20px
+  padding-right: 10px;
+}
+
+#login-error {
+padding-right: 10px;
 }
 
 #login-logout {
@@ -81,7 +85,8 @@ body {
   align-items: center;
   border-left: 2px solid #51728E;
   /* font-weight: 700; */
-  padding: 10px 20px;
+  padding: 0px 20px;
+  height: 40px;
 }
 
 #login-logout:hover {
