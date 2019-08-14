@@ -13,6 +13,12 @@ const Reducer = function ( state = initialState, action ) {
         awaitUser: true
       })
 
+    case 'LOGOUT':
+      return Object.assign({}, state, {
+        currentUser: {},
+        loggedIn: false
+      })
+
     case 'RECEIVE_USER':
     console.log('receiving_user')
       var loggedIn = true

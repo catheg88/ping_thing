@@ -1884,7 +1884,9 @@ var Actions = {
   },
   logOut: function logOut() {
     return function (dispatch) {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/users/sign_out');
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/users/sign_out').then()["catch"](dispatch({
+        type: 'LOGOUT'
+      }));
     };
   },
   fetchUser: function fetchUser() {
@@ -2002,6 +2004,12 @@ var Reducer = function Reducer() {
     case 'AWAIT_USER':
       return Object.assign({}, state, {
         awaitUser: true
+      });
+
+    case 'LOGOUT':
+      return Object.assign({}, state, {
+        currentUser: {},
+        loggedIn: false
       });
 
     case 'RECEIVE_USER':

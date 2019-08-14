@@ -23,6 +23,12 @@ const Actions = {
   logOut: () => {
     return function(dispatch) {
       return axios.delete('/users/sign_out')
+        .then()
+        .catch(
+          dispatch({
+            type: 'LOGOUT'
+          })
+        )
     }
   },
 
