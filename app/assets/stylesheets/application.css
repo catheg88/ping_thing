@@ -51,15 +51,9 @@ body {
 
 #login-form {
   display: flex;
-  align-content: center;
   justify-content: flex-end;
-  align-items: center;
   /* padding: 0px 0px 0px 20px; */
   margin: 0;
-}
-
-#navbar-right {
-  display: flex;
 }
 
 #login-form > div {
@@ -68,8 +62,21 @@ body {
   padding-left: 5px; */
 }
 
-#login-logout {
+#godzilla {
   display: flex;
+}
+
+#godzilla > div {
+  display: flex;
+}
+
+#navbar-right {
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px
+}
+
+#login-logout {
   justify-content: center;
   align-items: center;
   border-left: 2px solid #51728E;

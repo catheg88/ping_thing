@@ -41,7 +41,7 @@ const Actions = {
         }).catch( error => {
           dispatch(Actions.receiveUser({
             id: "unauthorized",
-            username: "",
+            username: "unauthorized",
             email: "unauthorized"
           }))
         })

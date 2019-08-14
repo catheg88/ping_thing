@@ -1897,7 +1897,7 @@ var Actions = {
       })["catch"](function (error) {
         dispatch(Actions.receiveUser({
           id: "unauthorized",
-          username: "",
+          username: "unauthorized",
           email: "unauthorized"
         }));
       });
@@ -2176,7 +2176,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.currentUser.username), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null);
     }
   }]);
 
@@ -2524,18 +2524,14 @@ function (_React$Component) {
     value: function render() {
       var errors = null;
 
-      if (this.props.currentUser === 'unauthorized' && this.state.tried === true && this.state.awaitUser === false) {
-        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "user ", this.props.currentUser, "...");
+      if (this.props.currentUser.username === 'unauthorized' && this.state.tried === true && this.state.awaitUser === false) {
+        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "user ", this.props.currentUser.username, "...");
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "navbar"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "logo"
-      }, "PingThing"), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "login-logout",
-        onClick: this.props.logOut
-      }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var displayName = this.props.currentUser.username;
+      var navbarRight = this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "navbar-right"
+      }, "Hello, ", this.props.currentUser.username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "navbar-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-form"
@@ -2547,10 +2543,20 @@ function (_React$Component) {
         type: "password",
         value: this.state.password,
         onChange: this.handlePasswordChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "navbar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "logo"
+      }, "PingThing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "godzilla"
+      }, navbarRight, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "login-logout",
+        onClick: this.props.logOut
+      }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-logout",
         onClick: this.handleSubmit.bind(this)
-      }, "Login"), errors)); // return (
+      }, "Login")), errors); // return (
       //   <div id="navbar">
       //     <div id="logo">PingThing</div>
       //     {this.props.loggedIn ?
@@ -2583,7 +2589,7 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    currentUser: state.currentUser.id,
+    currentUser: state.currentUser,
     loggedIn: state.loggedIn,
     awaitUser: state.awaitUser
   };

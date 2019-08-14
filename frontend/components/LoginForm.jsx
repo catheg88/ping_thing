@@ -39,44 +39,56 @@ class LoginForm extends React.Component {
 
   render() {
     var errors = null
-    if (this.props.currentUser === 'unauthorized' &&
+    if (this.props.currentUser.username === 'unauthorized' &&
         this.state.tried === true &&
         this.state.awaitUser === false) {
-      errors = <div>user {this.props.currentUser}...</div>
+      errors = <div>user {this.props.currentUser.username}...</div>
     }
+
+    var displayName = this.props.currentUser.username
+    const navbarRight = this.props.loggedIn ?
+      (<div id="navbar-right">Hello, {this.props.currentUser.username}</div>)
+      :
+      (<div id="navbar-right">
+        <div id="login-form">
+          <div>
+            <span>Username: </span>
+            <span>
+              <input type="text"
+                     value={this.state.username}
+                     onChange={this.handleUsernameChange.bind(this)}
+              />
+            </span>
+          </div>
+          <div>
+            <span>Password: </span>
+            <input type="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange.bind(this)}
+            />
+          </div>
+        </div>
+      </div>)
+
     return (
       <div id="navbar">
         <div id="logo">PingThing</div>
-        {this.props.loggedIn ?
-          <div id="login-logout" onClick={this.props.logOut}>
-            Logout
-          </div>
-          :
-            <div id="navbar-right">
-              <div id="login-form">
-                <div>
-                  <span>Username: </span>
-                  <span>
-                    <input type="text"
-                           value={this.state.username}
-                           onChange={this.handleUsernameChange.bind(this)}
-                    />
-                  </span>
-                </div>
-                <div>
-                  <span>Password: </span>
-                  <input type="password"
-                    value={this.state.password}
-                    onChange={this.handlePasswordChange.bind(this)}
-                  />
-                </div>
-              </div>
-              <div id="login-logout" onClick={this.handleSubmit.bind(this)}>
-                Login
-              </div>
-              {errors}
+
+
+        <div id="godzilla">
+          {navbarRight}
+          { this.props.loggedIn ?
+            <div id="login-logout" onClick={this.props.logOut}>
+              Logout
             </div>
-        }
+            :
+            <div id="login-logout" onClick={this.handleSubmit.bind(this)}>
+              Login
+            </div> }
+        </div>
+
+
+        {errors}
       </div>
     )
     // return (
@@ -108,7 +120,7 @@ class LoginForm extends React.Component {
 }
 
 const mapState = state => ({
-  currentUser: state.currentUser.id,
+  currentUser: state.currentUser,
   loggedIn: state.loggedIn,
   awaitUser: state.awaitUser
 })

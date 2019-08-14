@@ -18,7 +18,6 @@ class App extends React.Component {
     return (
       <div id="app">
         <LoginForm />
-        <div>Hello {this.props.currentUser.username}</div>
         {this.props.loggedIn ? <NewConversation /> : null}
         {this.props.loggedIn ? <ConversationList /> : null}
       </div>
