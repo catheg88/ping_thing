@@ -99,7 +99,7 @@ class LoginBar extends React.Component {
     return (
       <div>
         <div id="navbar">
-          <div id="logo">PingThing</div>
+          <div id="logo">P i n g T h i n g</div>
           <div id="navbar-right-container">
             {navbarRight}
             <div>{errors}</div>

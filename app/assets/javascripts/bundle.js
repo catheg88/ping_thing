@@ -2209,7 +2209,9 @@ function (_React$Component) {
         id: "main-pane"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "column-flex-container"
-      }, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.loggedIn ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "splash-message"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "PingThing, the real-time messaging app for all your legal IRC needs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Sign up or sign in to continue")), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "list-pane"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_7__["default"], null)) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "read-write-pane"
@@ -2618,7 +2620,7 @@ function (_React$Component) {
         id: "navbar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logo"
-      }, "PingThing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "P i n g T h i n g"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "navbar-right-container"
       }, navbarRight, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, errors), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-logout",
@@ -2940,17 +2942,19 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "new-conversation"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "to-input",
         type: "text",
         placeholder: "To",
         value: this.state.to,
         onChange: this.handleToChange.bind(this)
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "subject-input",
         type: "text",
         placeholder: "Subject",
         value: this.state.subject,
         onChange: this.handleSubjectChange.bind(this)
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        className: "MessageText",
+        id: "NewMessageText",
         placeholder: "Type your message and press Enter to send",
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),

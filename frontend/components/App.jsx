@@ -23,6 +23,18 @@ class App extends React.Component {
         <div id="main-pane">
           <div id="column-flex-container">
             {this.props.loggedIn ?
+                null
+              :
+                <div id="splash-message">
+                  <div>
+                    PingThing, the real-time messaging app for all your legal IRC needs
+                  </div>
+                  <p></p>
+                  <div>
+                    Sign up or sign in to continue
+                  </div>
+                </div>}
+            {this.props.loggedIn ?
                 <div id="list-pane">
                   <ConversationList />
                 </div>

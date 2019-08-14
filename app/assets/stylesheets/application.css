@@ -55,6 +55,7 @@ html, body {
   padding: 10px 10px;
   /* background-color: #658FB3; */
   background: linear-gradient(to right, #51728E, #81ACD2);
+  white-space: nowrap;
 }
 
 #login-form {
@@ -118,6 +119,11 @@ html, body {
   text-align: right;
 }
 
+#splash-message {
+  color: #81ACD2;
+  padding: 14px;
+}
+
 #column-flex-container {
   display: flex;
 }
@@ -126,13 +132,11 @@ html, body {
   overflow: scroll;
   width: 33%;
   border-right: 1px solid #C8D8E6;
-  /* padding-left: 10px; */
   min-width: 250px;
 }
 
 h2 {
   margin: 5px 0px;
-  /* text-align: center; */
   padding-left: 5px;
 }
 
@@ -148,14 +152,12 @@ h2 {
   width: 100%;
   min-width: 250px;
   padding: 10px 5px;
-  /* text-align: center; */
   background-color: #FEFEFE;
 }
 
 #new-conversation-button:hover {
   cursor: pointer;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
-  /* background-color: #51728E; */
 }
 
 #read-write-pane {
@@ -169,7 +171,6 @@ h2 {
 }
 
 .Conversation {
-  /* border-bottom: 1px solid #51728E; */
   padding: 5px 0px;
 }
 
@@ -180,12 +181,10 @@ h2 {
 .ActiveConversation {
   padding: 5px 0px;
   background: linear-gradient(to right, #81ACD2, #FEFEFE);
-  /* border-radius: 2px; */
 }
 
 .Conversation:hover {
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
-  /* border-radius: 2px; */
   cursor: pointer;
 }
 
@@ -199,14 +198,11 @@ h2 {
 
 .Message {
   display: flex;
-  /* border-bottom: 1px solid #51728E; */
   padding: 10px;
   align-items: center;
 }
 
 .MessageData {
-  /* min-width: 30%;
-  max-width: 30%; */
   min-width: 128px;
 }
 
@@ -216,7 +212,6 @@ h2 {
 
 #compose-reply {
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   padding-top: 10px;
 }
@@ -234,7 +229,47 @@ h2 {
   border-radius: 4px;
   font-family: 'Ubuntu';
   font-size: 12pt;
-  /* background-color: #D2DFEA; */
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
   border: none;
+}
+
+#NewMessageText {
+  height: 60px;
+  min-width: 95%;
+  max-width: 95%;
+  border-radius: 0px 0px 4px 4px;
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
+}
+
+#to-input {
+  height: 25px;
+  min-width: 95%;
+  max-width: 95%;
+  border-radius: 4px 4px 0px 0px;
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
+}
+
+#subject-input {
+  height: 25px;
+  min-width: 95%;
+  max-width: 95%;
+  /* border-radius: 4px; */
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
+}
+
+#subject-input:focus, #to-input:focus, #NewMessageText:focus, .MessageText:focus {
+  outline: none;
+}
+
+textarea, input {
+  padding: 5px;
 }
