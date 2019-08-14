@@ -34,6 +34,7 @@ class Api::ConversationsController < ApplicationController
     if current_user_is_participant == true
       @conversation = {
         "id" => conversation.id,
+        "user_id" => conversation.user_id,
         "subject" => conversation.subject,
         "participants" => [],
         "created_at" => conversation.conversation_created_at,
@@ -114,7 +115,8 @@ class Api::ConversationsController < ApplicationController
     Pusher.trigger('ping_channel', 'update', {
       message: 'new_conversation',
       interested_users: interested_users,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      user_id: conversation.user_id,
     })
   end
 

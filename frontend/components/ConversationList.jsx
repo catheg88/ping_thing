@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Actions from '../Actions.js'
 
 import Conversation from './Conversation'
+import NewConversationButton from './NewConversationButton'
 
 class ConversationList extends React.Component {
   componentDidMount() {
@@ -18,7 +19,8 @@ class ConversationList extends React.Component {
 
     return (
       <div id="conversation-list">
-        <h2>Conversations</h2>
+        <h2 id="conversation-heading">Conversations</h2>
+        <NewConversationButton />
         {Conversations}
       </div>
     )

@@ -1860,7 +1860,7 @@ module.exports = function isBuffer (obj) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
+/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
@@ -1981,6 +1981,8 @@ var Actions = {
     };
   },
   sendInitialMessage: function sendInitialMessage(message) {
+    console.log('SendInitialMessage message');
+    console.log(message);
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/conversations', message);
     };
@@ -1998,6 +2000,7 @@ var Actions = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (Actions);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2157,7 +2160,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConversationList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ConversationList */ "./frontend/components/ConversationList.jsx");
 /* harmony import */ var _MessageList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MessageList */ "./frontend/components/MessageList.jsx");
 /* harmony import */ var _NewConversation__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NewConversation */ "./frontend/components/NewConversation.jsx");
-/* harmony import */ var _NewConversationButton__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NewConversationButton */ "./frontend/components/NewConversationButton.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2175,7 +2177,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -2215,7 +2216,7 @@ function (_React$Component) {
         id: "column-flex-container"
       }, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "list-pane"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversationButton__WEBPACK_IMPORTED_MODULE_10__["default"], null)) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_7__["default"], null)) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "read-write-pane"
       }, this.props.focus === 'newConversation' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_9__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_8__["default"], null)) : null)));
     }
@@ -2250,9 +2251,17 @@ document.addEventListener("DOMContentLoaded", function () {
 pusherChannel.bind('update', function (data) {
   var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().currentUser; // interested users array calculated by controller and sent in pusher message
 
+  console.log('pusher data');
+  console.log(data);
+
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
+
+      if (data.user_id === currentUser.id) {
+        _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchMessages(data.conversation_id));
+        _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].setFocus(data.conversation_id));
+      }
     }
 
     if (data.message === 'new_message') {
@@ -2398,6 +2407,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
 /* harmony import */ var _Conversation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Conversation */ "./frontend/components/Conversation.jsx");
+/* harmony import */ var _NewConversationButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewConversationButton */ "./frontend/components/NewConversationButton.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2415,6 +2425,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2448,7 +2459,9 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "conversation-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Conversations"), Conversations);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        id: "conversation-heading"
+      }, "Conversations"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversationButton__WEBPACK_IMPORTED_MODULE_4__["default"], null), Conversations);
     }
   }]);
 
@@ -3138,7 +3151,7 @@ function (_React$Component) {
         id: "compose-reply"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         id: "reply-text",
-        placeholder: "type message and press enter",
+        placeholder: "Type message and press enter",
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)

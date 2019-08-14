@@ -1,4 +1,5 @@
 json.id @conversation["id"]
+json.user_id @conversation["user_id"]
 json.subject @conversation["subject"]
 json.participants @conversation["participants"]
 json.created_at @conversation["created_at"]

@@ -10,7 +10,6 @@ import SignupForm from './SignupForm'
 import ConversationList from './ConversationList'
 import MessageList from './MessageList'
 import NewConversation from './NewConversation'
-import NewConversationButton from './NewConversationButton'
 
 class App extends React.Component {
   componentDidMount(){
@@ -26,7 +25,6 @@ class App extends React.Component {
             {this.props.loggedIn ?
               <div id="list-pane">
                 <ConversationList />
-                <NewConversationButton />
               </div>
               : null}
             {this.props.loggedIn ?
@@ -74,9 +72,15 @@ document.addEventListener("DOMContentLoaded", function () {
 pusherChannel.bind('update', function(data) {
   var currentUser = Store.getState().currentUser
   // interested users array calculated by controller and sent in pusher message
+  console.log('pusher data')
+  console.log(data)
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
       Store.dispatch(Actions.fetchConversation(data.conversation_id))
+      if (data.user_id === currentUser.id) {
+        Store.dispatch(Actions.fetchMessages(data.conversation_id))
+        Store.dispatch(Actions.setFocus(data.conversation_id))
+      }
     }
     if (data.message === 'new_message') {
       console.log('pusher new_message')

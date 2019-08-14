@@ -83,7 +83,8 @@ html, body {
 }
 
 #login-error {
-padding-right: 10px;
+  text-align: left;
+  padding-right: 10px;
 }
 
 #login-logout {
@@ -110,6 +111,7 @@ padding-right: 10px;
 
 #signup-button-toggle:hover {
   color: #51728E;
+  cursor: pointer;
 }
 
 #signup-form {
@@ -124,23 +126,29 @@ padding-right: 10px;
   overflow: scroll;
   width: 33%;
   border-right: 1px solid #C8D8E6;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   min-width: 250px;
 }
 
+#conversation-heading {
+  margin: 5px 0px;
+  /* text-align: center; */
+  padding-left: 5px;
+}
+
 #new-conversation-button {
+  margin: 5px 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: fixed;
+  /* position: fixed;
   bottom: 0px;
-  left: 0px;
-  height: 45px;
-  width: 30%;
+  left: 0px; */
+  /* height: 45px; */
+  width: 100%;
   min-width: 250px;
-  padding: 10px 0px 10px 10px;
-  /* border-top: 1px solid #51728E; */
-  text-align: center;
+  padding: 10px 5px;
+  /* text-align: center; */
   background-color: #FEFEFE;
 }
 
@@ -172,12 +180,12 @@ padding-right: 10px;
 .ActiveConversation {
   padding: 5px 0px;
   background: linear-gradient(to right, #81ACD2, #FEFEFE);
-  border-radius: 2px;
+  /* border-radius: 2px; */
 }
 
 .Conversation:hover {
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
-  border-radius: 2px;
+  /* border-radius: 2px; */
   cursor: pointer;
 }
 
@@ -208,7 +216,8 @@ padding-right: 10px;
 
 #compose-reply {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: center;
   padding-top: 10px;
 }
 
@@ -223,4 +232,9 @@ padding-right: 10px;
   min-width: 95%;
   max-width: 95%;
   border-radius: 4px;
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  /* background-color: #D2DFEA; */
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
 }

@@ -127,6 +127,8 @@ const Actions = {
   }),
 
   sendInitialMessage: message => {
+    console.log('SendInitialMessage message')
+    console.log(message)
     return function(dispatch) {
       return axios.post('/api/conversations', message)
     }
