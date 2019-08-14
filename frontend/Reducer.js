@@ -3,6 +3,7 @@ const initialState = {
   conversations: [],
   loggedIn: false,
   awaitUser: false,
+  focus: "newConversation"
 }
 
 const Reducer = function ( state = initialState, action ) {
@@ -80,6 +81,11 @@ const Reducer = function ( state = initialState, action ) {
 
       return Object.assign({}, state, {
         conversations: reorderedConversations
+      })
+
+    case 'SET_FOCUS':
+      return Object.assign({}, state, {
+        focus: action.conversation_id
       })
 
     default:

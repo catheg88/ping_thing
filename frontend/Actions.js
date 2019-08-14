@@ -119,7 +119,12 @@ const Actions = {
     return function(dispatch){
       return axios.post(`/api/conversations/${message.conversation_id}/messages`, message)
     }
-  }
+  },
+
+  setFocus: conversation_id => ({
+    type: 'SET_FOCUS',
+    conversation_id: conversation_id
+  })
 
 }
 

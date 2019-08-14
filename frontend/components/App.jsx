@@ -7,7 +7,9 @@ import Actions from '../Actions'
 
 import LoginForm from './LoginForm'
 import ConversationList from './ConversationList'
+import MessageList from './MessageList'
 import NewConversation from './NewConversation'
+import NewConversationButton from './NewConversationButton'
 
 class App extends React.Component {
   componentDidMount(){
@@ -20,8 +22,21 @@ class App extends React.Component {
         <LoginForm />
         <div id="main-pane">
           <div id="column-flex-container">
-            {this.props.loggedIn ? <ConversationList /> : null}
-            {this.props.loggedIn ? <NewConversation /> : null}
+            {this.props.loggedIn ?
+              <div id="list-pane">
+                <ConversationList />
+                <NewConversationButton />
+              </div>
+              : null}
+            {this.props.loggedIn ?
+              <div id="read-write-pane">
+                {(this.props.focus === 'newConversation') ?
+                  <NewConversation />
+                  :
+                  <MessageList />
+                }
+              </div>
+              : null}
           </div>
         </div>
       </div>
@@ -31,7 +46,8 @@ class App extends React.Component {
 
 const mapState = state => ({
   currentUser: state.currentUser,
-  loggedIn: state.loggedIn
+  loggedIn: state.loggedIn,
+  focus: state.focus
 })
 
 const mapDispatch = dispatch => ({

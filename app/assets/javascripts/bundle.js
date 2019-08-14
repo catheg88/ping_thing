@@ -1974,6 +1974,12 @@ var Actions = {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/conversations/".concat(message.conversation_id, "/messages"), message);
     };
+  },
+  setFocus: function setFocus(conversation_id) {
+    return {
+      type: 'SET_FOCUS',
+      conversation_id: conversation_id
+    };
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (Actions);
@@ -1993,7 +1999,8 @@ __webpack_require__.r(__webpack_exports__);
   currentUser: {},
   conversations: [],
   loggedIn: false,
-  awaitUser: false
+  awaitUser: false,
+  focus: "newConversation"
 };
 
 var Reducer = function Reducer() {
@@ -2076,6 +2083,11 @@ var Reducer = function Reducer() {
         conversations: reorderedConversations
       });
 
+    case 'SET_FOCUS':
+      return Object.assign({}, state, {
+        focus: action.conversation_id
+      });
+
     default:
       return state;
   }
@@ -2127,7 +2139,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Actions */ "./frontend/Actions.js");
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./LoginForm */ "./frontend/components/LoginForm.jsx");
 /* harmony import */ var _ConversationList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ConversationList */ "./frontend/components/ConversationList.jsx");
-/* harmony import */ var _NewConversation__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NewConversation */ "./frontend/components/NewConversation.jsx");
+/* harmony import */ var _MessageList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MessageList */ "./frontend/components/MessageList.jsx");
+/* harmony import */ var _NewConversation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NewConversation */ "./frontend/components/NewConversation.jsx");
+/* harmony import */ var _NewConversationButton__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NewConversationButton */ "./frontend/components/NewConversationButton.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2145,6 +2159,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -2180,7 +2196,11 @@ function (_React$Component) {
         id: "main-pane"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "column-flex-container"
-      }, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null)));
+      }, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "list-pane"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversationButton__WEBPACK_IMPORTED_MODULE_9__["default"], null)) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "read-write-pane"
+      }, this.props.focus === 'newConversation' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_8__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_7__["default"], null)) : null)));
     }
   }]);
 
@@ -2190,7 +2210,8 @@ function (_React$Component) {
 var mapState = function mapState(state) {
   return {
     currentUser: state.currentUser,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    focus: state.focus
   };
 };
 
@@ -2240,8 +2261,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./frontend/components/Message.jsx");
-/* harmony import */ var _ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ReplyMessageForm */ "./frontend/components/ReplyMessageForm.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2259,8 +2278,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
 
 
 
@@ -2290,6 +2307,7 @@ function (_React$Component) {
         this.props.fetchMessages(conversation_id);
       }
 
+      this.props.setFocus(conversation_id);
       this.setState({
         expanded: !this.state.expanded
       });
@@ -2299,32 +2317,15 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var messageComponents = null;
-      var messages = this.props.conversation.messages;
-
-      if (messages && this.state.expanded) {
-        messageComponents = messages.map(function (message, idx) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            message: message,
-            conversation_id: _this2.props.conversation.id,
-            key: idx
-          });
-        });
-      } else {
-        messageComponents = null;
-      }
-
       var participants = this.props.conversation.participants;
       participants = participants.filter(function (p) {
         return p !== _this2.props.currentUser.username;
       }).join(", ");
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: function onClick() {
           return _this2.handleConversationClick(_this2.props.conversation.id);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Date: "), this.props.conversation.updated_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Subject: "), this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Participants: "), participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, messageComponents, this.state.expanded ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        conversation_id: this.props.conversation.id
-      }) : null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "subject: ", this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.updated_at));
     }
   }]);
 
@@ -2341,6 +2342,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchMessages: function fetchMessages(conversation_id) {
       dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchMessages(conversation_id));
+    },
+    setFocus: function setFocus(conversation_id) {
+      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].setFocus(conversation_id));
     }
   };
 };
@@ -2552,7 +2556,7 @@ function (_React$Component) {
         value: this.state.password,
         onChange: this.handlePasswordChange.bind(this)
       }))));
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "navbar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logo"
@@ -2564,31 +2568,11 @@ function (_React$Component) {
       }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "login-logout",
         onClick: this.handleSubmit.bind(this)
-      }, "Login"))); // return (
-      //   <div id="navbar">
-      //     <div id="logo">PingThing</div>
-      //     {this.props.loggedIn ?
-      //       <button type="button" onClick={this.props.logOut}>Logout</button>
-      //       :
-      //       <form onSubmit={this.handleSubmit.bind(this)}>
-      //         <label>
-      //           <span>Username: </span>
-      //           <input type="text"
-      //             value={this.state.username}
-      //             onChange={this.handleUsernameChange.bind(this)} />
-      //         </label>
-      //         <label>
-      //           <span>Password: </span>
-      //           <input type="password"
-      //             value={this.state.password}
-      //             onChange={this.handlePasswordChange.bind(this)} />
-      //         </label>
-      //         <input type="submit" value="Login" />
-      //         {errors}
-      //       </form>
-      //     }
-      //   </div>
-      // )
+      }, "Login"))), this.props.loggedIn ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "sign_up"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "/users/sign_up"
+      }, "Sign up")));
     }
   }]);
 
@@ -2676,6 +2660,108 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Message);
+
+/***/ }),
+
+/***/ "./frontend/components/MessageList.jsx":
+/*!*********************************************!*\
+  !*** ./frontend/components/MessageList.jsx ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message */ "./frontend/components/Message.jsx");
+/* harmony import */ var _ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ReplyMessageForm */ "./frontend/components/ReplyMessageForm.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var MessageList =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MessageList, _React$Component);
+
+  function MessageList() {
+    _classCallCheck(this, MessageList);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MessageList).apply(this, arguments));
+  }
+
+  _createClass(MessageList, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var messageComponents = null;
+      console.log('rendering MessageList');
+      this.props.conversations.forEach(function (conversation) {
+        if (conversation.id === _this.props.focus) {
+          console.log('bingo!');
+
+          if (conversation.messages) {
+            messageComponents = conversation.messages.map(function (message, idx) {
+              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                message: message,
+                conversation_id: conversation.id,
+                key: idx
+              });
+            });
+          }
+        }
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, messageComponents, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        conversation_id: this.focus
+      }));
+    }
+  }]);
+
+  return MessageList;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapState = function mapState(state) {
+  return {
+    focus: state.focus,
+    conversations: state.conversations
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    fetchConversations: function fetchConversations() {
+      dispatch(_Actions_js__WEBPACK_IMPORTED_MODULE_2__["default"].fetchConversations());
+    }
+  };
+};
+
+MessageList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(MessageList);
+/* harmony default export */ __webpack_exports__["default"] = (MessageList);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2821,6 +2907,84 @@ var mapDispatch = function mapDispatch(dispatch) {
 
 NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversation);
 /* harmony default export */ __webpack_exports__["default"] = (NewConversation);
+
+/***/ }),
+
+/***/ "./frontend/components/NewConversationButton.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/NewConversationButton.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions */ "./frontend/Actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var NewConversationButton =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewConversationButton, _React$Component);
+
+  function NewConversationButton() {
+    _classCallCheck(this, NewConversationButton);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(NewConversationButton).apply(this, arguments));
+  }
+
+  _createClass(NewConversationButton, [{
+    key: "handleClick",
+    value: function handleClick(e) {
+      e.preventDefault();
+      this.props.setFocus("newConversation");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "new-conversation-button",
+        onClick: this.handleClick.bind(this)
+      }, "Start a new conversation");
+    }
+  }]);
+
+  return NewConversationButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    setFocus: function setFocus(conversation_id) {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_2__["default"].setFocus(conversation_id));
+    }
+  };
+};
+
+NewConversationButton = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversationButton);
+/* harmony default export */ __webpack_exports__["default"] = (NewConversationButton);
 
 /***/ }),
 

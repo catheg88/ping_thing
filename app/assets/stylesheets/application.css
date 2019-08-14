@@ -21,7 +21,7 @@ html, body {
   /*background-size: cover;
   background-attachment: fixed;*/
   margin: 0;
-  font-family: 'Ubuntu';
+  font-family: 'Palatino';
 }
 
 #root, #app, #main-pane, #column-flex-container {
@@ -45,7 +45,7 @@ html, body {
   align-items: center;
   border-right: 2px solid #51728E;
   /* font-weight: 700; */
-  padding: 10px 20px;
+  padding: 10px 10px;
   background-color: #658FB3;
 }
 
@@ -83,8 +83,9 @@ padding-right: 10px;
   align-items: center;
   border-left: 2px solid #51728E;
   /* font-weight: 700; */
-  padding: 0px 20px;
+  padding: 0px 10px;
   height: 40px;
+  width: 64px;
 }
 
 #login-logout:hover {
@@ -92,20 +93,55 @@ padding-right: 10px;
   cursor: pointer;
 }
 
+#sign_up {
+  padding: 14px;
+  /* align: right; */
+  display: block;
+  float: right;
+}
+
 #main-pane {
-  margin: 0px 10px 10px 10px;
+  /* margin: 0px 10px 10px 10px; */
 }
 
 #column-flex-container {
   display: flex;
-  padding: 0px 10px 10px 0px;
 }
 
-#conversation-list {
+#list-pane {
   width: 33%;
   border-right: 1px solid #51728E;
+  padding-left: 10px;
+  min-width: 250px;
 }
-#new-conversation {
+
+#new-conversation-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 45px;
+  width: 33%;
+  min-width: 250px;
+  padding: 10px 0px 10px 10px;
+  border-top: 1px solid #51728E;
+  text-align: center;
+  background-color: #658FB3;
+}
+
+#new-conversation-button:hover {
+  background-color: #51728E;
+}
+/* #conversation-list {
+  width: 33%;
+} */
+
+#read-write-pane {
   width: 66%;
+}
+
+#new-conversation {
   padding: 0px 10px 10px 10px;
 }
