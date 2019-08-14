@@ -3151,7 +3151,7 @@ function (_React$Component) {
         id: "compose-reply"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         id: "reply-text",
-        placeholder: "Type message and press enter",
+        placeholder: this.state.errors ? this.state.errors : 'Type your message and press Enter to send',
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)
