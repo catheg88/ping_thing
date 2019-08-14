@@ -5,7 +5,8 @@ import { Provider, connect } from 'react-redux'
 import Store from '../Store'
 import Actions from '../Actions'
 
-import LoginForm from './LoginForm'
+import LoginBar from './LoginBar'
+import SignupForm from './SignupForm'
 import ConversationList from './ConversationList'
 import MessageList from './MessageList'
 import NewConversation from './NewConversation'
@@ -19,7 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="app">
-        <LoginForm />
+        <LoginBar />
         <div id="main-pane">
           <div id="column-flex-container">
             {this.props.loggedIn ?

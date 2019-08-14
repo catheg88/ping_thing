@@ -32,6 +32,23 @@ const Actions = {
     }
   },
 
+  signUp: signupData => {
+    return function(dispatch) {
+      dispatch(Actions.awaitUser())
+      return axios.post('/users', {
+        user: {
+          username: signupData.username,
+          email: signupData.email,
+          password: signupData.passwordOne,
+          password_confirmation: signupData.passwordTwo
+        }
+      })
+        .then( res => {
+          dispatch(Actions.fetchUser())
+        })
+    }
+  },
+
   fetchUser: () => {
     return function(dispatch) {
       dispatch(Actions.awaitUser())

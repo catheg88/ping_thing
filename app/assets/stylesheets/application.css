@@ -103,9 +103,12 @@ padding-right: 10px;
 
 #sign_up {
   padding: 14px;
-  /* align: right; */
   display: block;
   float: right;
+}
+
+#signup-form {
+  text-align: right;
 }
 
 #column-flex-container {

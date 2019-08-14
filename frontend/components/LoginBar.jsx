@@ -2,14 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Actions from '../Actions'
+import SignupForm from './SignupForm'
 
-class LoginForm extends React.Component {
+class LoginBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       username: "",
       password: "",
-      tried: false
+      tried: false,
+      signup: false
     }
   }
 
@@ -35,6 +37,12 @@ class LoginForm extends React.Component {
       password: "",
       tried: true
     })
+  }
+
+  handleSignupClick(e) {
+    e.preventDefault()
+    console.log('signupClick')
+    this.setState({ signup: true})
   }
 
   render() {
@@ -68,7 +76,19 @@ class LoginForm extends React.Component {
             />
           </div>
         </div>
-      </div>)
+      </div>
+    )
+
+    var signupLink = this.props.loggedIn ?
+      null
+      :
+      <div id="sign_up">
+        {this.state.signup ?
+          <SignupForm />
+          :
+          <div onClick={this.handleSignupClick.bind(this)}>Sign up</div>
+        }
+      </div>
 
     return (
       <div>
@@ -87,7 +107,7 @@ class LoginForm extends React.Component {
               </div>}
           </div>
         </div>
-        {this.props.loggedIn ? null : <div id="sign_up"><a href="/users/sign_up">Sign up</a></div>}
+        {signupLink}
       </div>
     )
   }
@@ -108,9 +128,9 @@ const mapDispatch = dispatch => ({
   }
 })
 
-LoginForm = connect(
+LoginBar = connect(
   mapState,
   mapDispatch
-)(LoginForm)
+)(LoginBar)
 
-export default LoginForm
+export default LoginBar
