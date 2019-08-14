@@ -53,8 +53,8 @@ class Api::MessagesController < ApplicationController
     end
 
     # update conversation's 'updated_at' time
-    Conversation.find(params[:conversation_id]).touch
-
+    conversation = Conversation.find(params[:conversation_id])
+    conversation.touch
     # decide who needs to know and send pusher update
     interested_users = []
     conversation.users.each do |u|

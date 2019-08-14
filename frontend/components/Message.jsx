@@ -6,11 +6,12 @@ import Actions from '../Actions.js'
 class Message extends React.Component {
   render() {
     return (
-      <div>
-        <div>From: {this.props.message.from}</div>
-        <div>At: {this.props.message.created_at}</div>
-        <div>Message: {this.props.message.body}</div>
-        <div>---</div>
+      <div className="Message">
+        <div className="MessageData">
+          <div>{this.props.message.from}</div>
+          <div className="MessageDate">{this.props.message.created_at}</div>
+        </div>
+        <div className="MessageBody">{this.props.message.body}</div>
       </div>
     )
   }

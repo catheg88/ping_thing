@@ -2288,16 +2288,10 @@ var Conversation =
 function (_React$Component) {
   _inherits(Conversation, _React$Component);
 
-  function Conversation(props) {
-    var _this;
-
+  function Conversation() {
     _classCallCheck(this, Conversation);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Conversation).call(this, props));
-    _this.state = {
-      expanded: false
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Conversation).apply(this, arguments));
   }
 
   _createClass(Conversation, [{
@@ -2308,24 +2302,38 @@ function (_React$Component) {
       }
 
       this.props.setFocus(conversation_id);
-      this.setState({
-        expanded: !this.state.expanded
-      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var participants = this.props.conversation.participants;
-      participants = participants.filter(function (p) {
-        return p !== _this2.props.currentUser.username;
-      }).join(", ");
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+
+      if (participants.length === 1) {
+        participants = "only you...";
+      } else {
+        participants = participants.filter(function (p) {
+          return p !== _this.props.currentUser.username;
+        }).join(", ") + " and you";
+      }
+
+      var conversation = this.props.focus === this.props.conversation.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ActiveConversation",
         onClick: function onClick() {
-          return _this2.handleConversationClick(_this2.props.conversation.id);
+          return _this.handleConversationClick(_this.props.conversation.id);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "subject: ", this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.updated_at));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ConversationDate"
+      }, this.props.conversation.updated_at)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Conversation",
+        onClick: function onClick() {
+          return _this.handleConversationClick(_this.props.conversation.id);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ConversationDate"
+      }, this.props.conversation.updated_at));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, conversation);
     }
   }]);
 
@@ -2334,7 +2342,8 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    focus: state.focus
   };
 };
 
@@ -2652,7 +2661,15 @@ function (_React$Component) {
   _createClass(Message, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "From: ", this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "At: ", this.props.message.created_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Message: ", this.props.message.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "---"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Message"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "MessageData"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.message.from), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "MessageDate"
+      }, this.props.message.created_at)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "MessageBody"
+      }, this.props.message.body));
     }
   }]);
 
@@ -2735,9 +2752,9 @@ function (_React$Component) {
           }
         }
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, messageComponents, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReplyMessageForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
         conversation_id: this.focus
-      }));
+      }), messageComponents);
     }
   }]);
 
@@ -3062,7 +3079,7 @@ function (_React$Component) {
       }
 
       var replyMessageData = {
-        'conversation_id': this.props.conversation_id,
+        'conversation_id': this.props.focus,
         'message': this.state.message
       };
       this.props.sendReplyMessage(replyMessageData);
@@ -3072,22 +3089,38 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleKeyDown",
+    value: function handleKeyDown(e) {
+      if (e.key === 'Enter') {
+        this.handleSubmit(e);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Reply: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "compose-reply"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        id: "reply-text",
         value: this.state.message,
-        onChange: this.handleMessageChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Send"
-      })));
+        onChange: this.handleMessageChange.bind(this),
+        onKeyDown: this.handleKeyDown.bind(this)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "send-button",
+        onClick: this.handleSubmit.bind(this)
+      }, "Send"));
     }
   }]);
 
   return ReplyMessageForm;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // <div>{this.state.errors}</div>
+
+
+var mapState = function mapState(state) {
+  return {
+    focus: state.focus
+  };
+};
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
@@ -3097,7 +3130,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-ReplyMessageForm = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(ReplyMessageForm);
+ReplyMessageForm = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(ReplyMessageForm);
 /* harmony default export */ __webpack_exports__["default"] = (ReplyMessageForm);
 
 /***/ }),

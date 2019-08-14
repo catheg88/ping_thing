@@ -24,7 +24,7 @@ class ReplyMessageForm extends React.Component {
       return
     }
     const replyMessageData = {
-      'conversation_id': this.props.conversation_id,
+      'conversation_id': this.props.focus,
       'message': this.state.message
     }
     this.props.sendReplyMessage(replyMessageData)
@@ -34,24 +34,31 @@ class ReplyMessageForm extends React.Component {
     })
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e)
+    }
+  }
+
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div>
-            <label>
-              <span>Reply: </span>
-              <textarea value={this.state.message}
-                        onChange={this.handleMessageChange.bind(this)} />
-            </label>
-          </div>
-          <div>{this.state.errors}</div>
-          <input type="submit" value="Send" />
-        </form>
+      <div id="compose-reply">
+        <textarea id="reply-text"
+                  value={this.state.message}
+                  onChange={this.handleMessageChange.bind(this)}
+                  onKeyDown={this.handleKeyDown.bind(this)} />
+        <div id="send-button"
+             onClick={this.handleSubmit.bind(this)}
+        >Send</div>
       </div>
     )
   }
 }
+// <div>{this.state.errors}</div>
+
+const mapState = state => ({
+  focus: state.focus
+})
 
 const mapDispatch = dispatch => ({
   sendReplyMessage: replyMessageData => {
@@ -60,7 +67,7 @@ const mapDispatch = dispatch => ({
 })
 
 ReplyMessageForm = connect(
-  null,
+  mapState,
   mapDispatch
 )(ReplyMessageForm)
 

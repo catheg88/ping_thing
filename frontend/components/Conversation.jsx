@@ -4,38 +4,48 @@ import { connect } from 'react-redux'
 import Actions from '../Actions.js'
 
 class Conversation extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { expanded: false }
-  }
-
   handleConversationClick(conversation_id) {
     if (!this.props.conversation.messages) {
       this.props.fetchMessages(conversation_id)
     }
     this.props.setFocus(conversation_id)
-    this.setState({
-      expanded: !this.state.expanded,
-    })
   }
 
   render() {
     var participants = this.props.conversation.participants
+    if (participants.length === 1) {
+      participants = "only you..."
+    } else {
     participants = participants.filter( p => (p !== this.props.currentUser.username))
                                .join(", ")
+                               + " and you"
+    }
 
-    return (
-      <div onClick={ () => this.handleConversationClick(this.props.conversation.id) }>
+    var conversation = (this.props.focus === this.props.conversation.id) ?
+      <div className="ActiveConversation"
+           onClick={() => this.handleConversationClick(this.props.conversation.id)}
+      >
         <div><b>{participants}</b></div>
-        <div>subject: {this.props.conversation.subject}</div>
-        <div>{this.props.conversation.updated_at}</div>
+        <div>{this.props.conversation.subject}</div>
+        <div className="ConversationDate">{this.props.conversation.updated_at}</div>
       </div>
-    )
+      :
+      <div className="Conversation"
+        onClick={() => this.handleConversationClick(this.props.conversation.id)}
+        >
+        <div><b>{participants}</b></div>
+        <div>{this.props.conversation.subject}</div>
+        <div className="ConversationDate">{this.props.conversation.updated_at}</div>
+      </div>
+
+
+    return <div>{conversation}</div>
   }
 }
 
 const mapState = state => ({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
+  focus: state.focus
 })
 
 const mapDispatch = dispatch => ({

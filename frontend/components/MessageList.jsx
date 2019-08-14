@@ -25,8 +25,8 @@ class MessageList extends React.Component {
     })
     return(
       <div>
-        {messageComponents}
         <ReplyMessageForm conversation_id={this.focus} />
+        {messageComponents}
       </div>
     )
   }

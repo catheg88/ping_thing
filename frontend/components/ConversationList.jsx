@@ -12,7 +12,8 @@ class ConversationList extends React.Component {
 
   render() {
     const Conversations = this.props.conversations.map( (conversation, idx) => {
-      return <Conversation conversation={conversation} key={idx} />
+      return <Conversation conversation={conversation}
+                           key={idx} />
     })
 
     return (
