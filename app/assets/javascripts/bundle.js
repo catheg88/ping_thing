@@ -1864,8 +1864,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
+  awaitUser: function awaitUser() {
+    return {
+      type: 'AWAIT_USER'
+    };
+  },
   logIn: function logIn(loginData) {
     return function (dispatch) {
+      dispatch(Actions.awaitUser());
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/users/sign_in', {
         user: {
           login: loginData.username,
@@ -1883,6 +1889,7 @@ var Actions = {
   },
   fetchUser: function fetchUser() {
     return function (dispatch) {
+      dispatch(Actions.awaitUser());
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/current_user').then(function (res) {
         dispatch(Actions.receiveUser(res.data));
       })["catch"](function (error) {
@@ -1983,7 +1990,8 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(console) {var initialState = {
   currentUser: {},
   conversations: [],
-  loggedIn: false
+  loggedIn: false,
+  awaitUser: false
 };
 
 var Reducer = function Reducer() {
@@ -1991,6 +1999,11 @@ var Reducer = function Reducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case 'AWAIT_USER':
+      return Object.assign({}, state, {
+        awaitUser: true
+      });
+
     case 'RECEIVE_USER':
       console.log('receiving_user');
       var loggedIn = true;
@@ -2005,7 +2018,8 @@ var Reducer = function Reducer() {
           username: action.username,
           email: action.email
         },
-        loggedIn: loggedIn
+        loggedIn: loggedIn,
+        awaitUser: false
       });
 
     case 'RECEIVE_CONVERSATION':
@@ -2164,7 +2178,8 @@ function (_React$Component) {
 var mapState = function mapState(state) {
   return {
     currentUser: state.currentUser,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    awaitUser: state.awaitUser
   };
 };
 
@@ -2290,7 +2305,7 @@ function (_React$Component) {
 
       var participants = this.props.conversation.participants;
       participants = participants.filter(function (p) {
-        return p !== _this2.props.current_user.username;
+        return p !== _this2.props.currentUser.username;
       }).join(", ");
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: function onClick() {
@@ -2307,7 +2322,7 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    current_user: state.current_user
+    currentUser: state.currentUser
   };
 };
 
@@ -2374,7 +2389,8 @@ function (_React$Component) {
 
   _createClass(ConversationList, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// this.props.fetchConversations()
+    value: function componentDidMount() {
+      this.props.fetchConversations();
     }
   }, {
     key: "render",
@@ -2501,8 +2517,8 @@ function (_React$Component) {
     value: function render() {
       var errors = null;
 
-      if (this.props.currentUser === 'unauthorized' && this.state.tried === true) {
-        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Login failed");
+      if (this.props.currentUser === 'unauthorized' && this.state.tried === true && this.state.awaitUser === false) {
+        errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "user ", this.props.currentUser, "...");
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2531,7 +2547,8 @@ function (_React$Component) {
 var mapState = function mapState(state) {
   return {
     currentUser: state.currentUser.id,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    awaitUser: state.awaitUser
   };
 };
 

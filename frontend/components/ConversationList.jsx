@@ -7,7 +7,7 @@ import Conversation from './Conversation'
 
 class ConversationList extends React.Component {
   componentDidMount() {
-    // this.props.fetchConversations()
+    this.props.fetchConversations()
   }
 
   render() {

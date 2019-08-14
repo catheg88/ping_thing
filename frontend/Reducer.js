@@ -1,11 +1,17 @@
 const initialState = {
   currentUser: {},
   conversations: [],
-  loggedIn: false
+  loggedIn: false,
+  awaitUser: false,
 }
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
+
+    case 'AWAIT_USER':
+      return Object.assign({}, state, {
+        awaitUser: true
+      })
 
     case 'RECEIVE_USER':
     console.log('receiving_user')
@@ -19,7 +25,8 @@ const Reducer = function ( state = initialState, action ) {
           username: action.username,
           email: action.email
         },
-        loggedIn: loggedIn
+        loggedIn: loggedIn,
+        awaitUser: false
       })
 
       case 'RECEIVE_CONVERSATION':

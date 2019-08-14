@@ -33,7 +33,7 @@ class Conversation extends React.Component {
     }
 
     var participants = this.props.conversation.participants
-    participants = participants.filter( p => (p !== this.props.current_user.username))
+    participants = participants.filter( p => (p !== this.props.currentUser.username))
                                .join(", ")
 
     return (
@@ -54,7 +54,7 @@ class Conversation extends React.Component {
 }
 
 const mapState = state => ({
-  current_user: state.current_user
+  currentUser: state.currentUser
 })
 
 const mapDispatch = dispatch => ({

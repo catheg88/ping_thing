@@ -1,9 +1,13 @@
 import axios from 'axios'
 
 const Actions = {
+  awaitUser: () => ({
+    type: 'AWAIT_USER'
+  }),
 
   logIn: loginData => {
     return function(dispatch) {
+      dispatch(Actions.awaitUser())
       return axios.post('/users/sign_in', {
         user: {
           login: loginData.username,
@@ -24,6 +28,7 @@ const Actions = {
 
   fetchUser: () => {
     return function(dispatch) {
+      dispatch(Actions.awaitUser())
       return axios.get('/api/current_user')
         .then( res => {
           dispatch(Actions.receiveUser(res.data))

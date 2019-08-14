@@ -39,8 +39,10 @@ class LoginForm extends React.Component {
 
   render() {
     var errors = null
-    if (this.props.currentUser === 'unauthorized' && this.state.tried === true) {
-      errors = <div>Login failed</div>
+    if (this.props.currentUser === 'unauthorized' &&
+        this.state.tried === true &&
+        this.state.awaitUser === false) {
+      errors = <div>user {this.props.currentUser}...</div>
     }
     return (
       <div>
@@ -71,7 +73,8 @@ class LoginForm extends React.Component {
 
 const mapState = state => ({
   currentUser: state.currentUser.id,
-  loggedIn: state.loggedIn
+  loggedIn: state.loggedIn,
+  awaitUser: state.awaitUser
 })
 
 const mapDispatch = dispatch => ({
