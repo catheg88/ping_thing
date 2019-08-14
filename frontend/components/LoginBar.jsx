@@ -82,11 +82,11 @@ class LoginBar extends React.Component {
     var signupLink = this.props.loggedIn ?
       null
       :
-      <div id="sign_up">
+      <div id="signup">
         {this.state.signup ?
           <SignupForm />
           :
-          <div onClick={this.handleSignupClick.bind(this)}>Sign up</div>
+          <div id="signup-button-toggle" onClick={this.handleSignupClick.bind(this)}>Sign up</div>
         }
       </div>
 

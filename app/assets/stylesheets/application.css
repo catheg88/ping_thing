@@ -101,10 +101,15 @@ padding-right: 10px;
   cursor: pointer;
 }
 
-#sign_up {
+#signup {
   padding: 14px;
   display: block;
   float: right;
+  color: #81ACD2;
+}
+
+#signup-button-toggle:hover {
+  color: #51728E;
 }
 
 #signup-form {

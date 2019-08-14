@@ -98,7 +98,7 @@ class SignupBar extends React.Component {
           />
         </div>
         {errors}
-        <div onClick={this.handleSubmit.bind(this)}>Sign up</div>
+        <div id="signup-button-toggle" onClick={this.handleSubmit.bind(this)}>Sign up</div>
       </div>
     )
   }

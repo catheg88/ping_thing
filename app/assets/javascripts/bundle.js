@@ -2599,8 +2599,9 @@ function (_React$Component) {
         onChange: this.handlePasswordChange.bind(this)
       }))));
       var signupLink = this.props.loggedIn ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "sign_up"
+        id: "signup"
       }, this.state.signup ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SignupForm__WEBPACK_IMPORTED_MODULE_3__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "signup-button-toggle",
         onClick: this.handleSignupClick.bind(this)
       }, "Sign up"));
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3306,6 +3307,7 @@ function (_React$Component) {
         value: this.state.passwordTwo,
         onChange: this.handlePasswordTwoChange.bind(this)
       })), errors, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "signup-button-toggle",
         onClick: this.handleSubmit.bind(this)
       }, "Sign up"));
     }
