@@ -6,10 +6,10 @@ class Conversation < ApplicationRecord
   validates :subject, presence: true
 
   def conversation_created_at
-    created_at.strftime("%-m/%-d/%y, %-l:%M %p")
+    created_at.localtime.strftime("%-m/%-d/%y, %-l:%M %p")
   end
 
   def conversation_updated_at
-    updated_at.strftime("%-m/%-d/%y, %-l:%M %p")
+    updated_at.localtime.strftime("%-m/%-d/%y, %-l:%M %p")
   end
 end
