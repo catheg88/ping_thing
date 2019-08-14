@@ -8,7 +8,8 @@ class LoginForm extends React.Component {
     super(props)
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      tried: false
     }
   }
 
@@ -31,44 +32,46 @@ class LoginForm extends React.Component {
     this.props.submitLogin(loginData)
     this.setState({
       username: "",
-      password: ""
+      password: "",
+      tried: true
     })
   }
 
   render() {
     var errors = null
-    if (this.props.current_user === 'unauthorized') {
+    if (this.props.currentUser === 'unauthorized' && this.state.tried === true) {
       errors = <div>Login failed</div>
     }
     return (
       <div>
+      {this.props.loggedIn ?
+        <button type="button"onClick={this.props.logOut}>Logout</button>
+        :
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div>
-            <label>
-              <span>Username: </span>
-              <input type="text"
-                     value={this.state.username}
-                     onChange={this.handleUsernameChange.bind(this)} />
-            </label>
-            <label>
-              <span>Password: </span>
-              <input type="text"
-                     value={this.state.password}
-                     onChange={this.handlePasswordChange.bind(this)} />
-            </label>
-          </div>
-          <div>{this.state.errors}</div>
+          <label>
+            <span>Username: </span>
+            <input type="text"
+              value={this.state.username}
+              onChange={this.handleUsernameChange.bind(this)} />
+          </label>
+          <label>
+            <span>Password: </span>
+            <input type="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange.bind(this)} />
+          </label>
           <input type="submit" value="Login" />
-          <button type="button"onClick={this.props.logOut}>Logout</button>
+          {errors}
         </form>
-        {errors}
+      }
       </div>
     )
   }
 }
 
 const mapState = state => ({
-  current_user: state.current_user.id
+  currentUser: state.currentUser.id,
+  loggedIn: state.loggedIn
 })
 
 const mapDispatch = dispatch => ({

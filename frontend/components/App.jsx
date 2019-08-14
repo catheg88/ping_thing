@@ -11,29 +11,35 @@ import NewConversation from './NewConversation'
 
 class App extends React.Component {
   componentDidMount(){
-    // console.log('App cdm this.props.current_user')
-    // console.log(this.props.current_user.username)
+    this.props.fetchUser()
   }
 
   render() {
     return (
       <div id="app">
-        <div>Hello {this.props.current_user.username}</div>
+        <div>Hello {this.props.currentUser.username}</div>
         <LoginForm />
-        <NewConversation />
-        <ConversationList />
+        {this.props.loggedIn ? <NewConversation /> : null}
+        {this.props.loggedIn ? <ConversationList /> : null}
       </div>
     )
   }
 }
 
 const mapState = state => ({
-  current_user: state.current_user
+  currentUser: state.currentUser,
+  loggedIn: state.loggedIn
+})
+
+const mapDispatch = dispatch => ({
+  fetchUser: () => {
+    dispatch(Actions.fetchUser())
+  }
 })
 
 App = connect(
   mapState,
-  null
+  mapDispatch
 )(App)
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -46,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // pusherChannel provided from rails `app/views/layouts/application.html.erb`
 pusherChannel.bind('update', function(data) {
-  var currentUser = Store.getState().current_user
+  var currentUser = Store.getState().currentUser
   // interested users array calculated by controller and sent in pusher message
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {

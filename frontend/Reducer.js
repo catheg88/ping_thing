@@ -1,18 +1,25 @@
 const initialState = {
-  current_user: {},
-  conversations: []
+  currentUser: {},
+  conversations: [],
+  loggedIn: false
 }
 
 const Reducer = function ( state = initialState, action ) {
   switch (action.type) {
 
     case 'RECEIVE_USER':
+    console.log('receiving_user')
+      var loggedIn = true
+      if (action.id === "unauthorized") {
+        loggedIn = false
+      }
       return Object.assign({}, state, {
-        current_user: {
+        currentUser: {
           id: action.id,
           username: action.username,
           email: action.email
-        }
+        },
+        loggedIn: loggedIn
       })
 
       case 'RECEIVE_CONVERSATION':

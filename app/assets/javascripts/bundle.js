@@ -1980,9 +1980,10 @@ var Actions = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var initialState = {
-  current_user: {},
-  conversations: []
+/* WEBPACK VAR INJECTION */(function(console) {var initialState = {
+  currentUser: {},
+  conversations: [],
+  loggedIn: false
 };
 
 var Reducer = function Reducer() {
@@ -1991,12 +1992,20 @@ var Reducer = function Reducer() {
 
   switch (action.type) {
     case 'RECEIVE_USER':
+      console.log('receiving_user');
+      var loggedIn = true;
+
+      if (action.id === "unauthorized") {
+        loggedIn = false;
+      }
+
       return Object.assign({}, state, {
-        current_user: {
+        currentUser: {
           id: action.id,
           username: action.username,
           email: action.email
-        }
+        },
+        loggedIn: loggedIn
       });
 
     case 'RECEIVE_CONVERSATION':
@@ -2051,6 +2060,7 @@ var Reducer = function Reducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Reducer);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2136,15 +2146,15 @@ function (_React$Component) {
 
   _createClass(App, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// console.log('App cdm this.props.current_user')
-      // console.log(this.props.current_user.username)
+    value: function componentDidMount() {
+      this.props.fetchUser();
     }
   }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.current_user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello ", this.props.currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_5__["default"], null), this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversation__WEBPACK_IMPORTED_MODULE_7__["default"], null) : null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConversationList__WEBPACK_IMPORTED_MODULE_6__["default"], null) : null);
     }
   }]);
 
@@ -2153,11 +2163,20 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    current_user: state.current_user
+    currentUser: state.currentUser,
+    loggedIn: state.loggedIn
   };
 };
 
-App = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, null)(App);
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    fetchUser: function fetchUser() {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUser());
+    }
+  };
+};
+
+App = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(App);
 document.addEventListener("DOMContentLoaded", function () {
   Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: _Store__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -2165,7 +2184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }); // pusherChannel provided from rails `app/views/layouts/application.html.erb`
 
 pusherChannel.bind('update', function (data) {
-  var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().current_user; // interested users array calculated by controller and sent in pusher message
+  var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().currentUser; // interested users array calculated by controller and sent in pusher message
 
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
@@ -2355,8 +2374,7 @@ function (_React$Component) {
 
   _createClass(ConversationList, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchConversations();
+    value: function componentDidMount() {// this.props.fetchConversations()
     }
   }, {
     key: "render",
@@ -2441,7 +2459,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
     _this.state = {
       username: "",
-      password: ""
+      password: "",
+      tried: false
     };
     return _this;
   }
@@ -2473,7 +2492,8 @@ function (_React$Component) {
       this.props.submitLogin(loginData);
       this.setState({
         username: "",
-        password: ""
+        password: "",
+        tried: true
       });
     }
   }, {
@@ -2481,27 +2501,27 @@ function (_React$Component) {
     value: function render() {
       var errors = null;
 
-      if (this.props.current_user === 'unauthorized') {
+      if (this.props.currentUser === 'unauthorized' && this.state.tried === true) {
         errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Login failed");
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.props.logOut
+      }, "Logout") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Username: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Username: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.username,
         onChange: this.handleUsernameChange.bind(this)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+        type: "password",
         value: this.state.password,
         onChange: this.handlePasswordChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Login"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button",
-        onClick: this.props.logOut
-      }, "Logout")), errors);
+      }), errors));
     }
   }]);
 
@@ -2510,7 +2530,8 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    current_user: state.current_user.id
+    currentUser: state.currentUser.id,
+    loggedIn: state.loggedIn
   };
 };
 
