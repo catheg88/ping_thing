@@ -7,7 +7,7 @@ Here are some ways it's cooler than it looks:
 * Real-time updates to receive messages using Pusher/websockets. Only affected users respond to each Pusher notification, and they grab only the new data they don't have from the database.
 * Clean data model that scales well. Database indexes for fast lookups and validations. No silly nonsense like duplicating conversation/message records for each user, storing message recipient IDs in an array and trying to use them for lookups, etc.
 * API endpoint responses are restricted to only allow access to the current user's data. Stacie can't read Alex's message to Taylor.
-* Descriptive error messages
+* 
 
 # Installation
 This app was built using

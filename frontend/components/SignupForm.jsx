@@ -55,6 +55,12 @@ class SignupBar extends React.Component {
     })
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e)
+    }
+  }
+
   render() {
     var errors = null
     if (this.props.currentUser.username === 'unauthorized' &&
@@ -93,7 +99,8 @@ class SignupBar extends React.Component {
           <span>Re-type password: </span>
           <input type="password"
             value={this.state.passwordTwo}
-            onChange={this.handlePasswordTwoChange.bind(this)} />
+            onChange={this.handlePasswordTwoChange.bind(this)}
+            onKeyDown={this.handleKeyDown.bind(this)}/>
         </div>
         {errors}
         <div id="signup-button-toggle" onClick={this.handleSubmit.bind(this)}>

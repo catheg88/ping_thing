@@ -21,7 +21,6 @@ const Reducer = function ( state = initialState, action ) {
       })
 
     case 'RECEIVE_USER':
-    console.log('receiving_user')
       var loggedIn = true
       if (action.id === "unauthorized") {
         loggedIn = false

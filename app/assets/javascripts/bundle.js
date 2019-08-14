@@ -1860,7 +1860,7 @@ module.exports = function isBuffer (obj) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var Actions = {
@@ -1981,8 +1981,6 @@ var Actions = {
     };
   },
   sendInitialMessage: function sendInitialMessage(message) {
-    console.log('SendInitialMessage message');
-    console.log(message);
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/conversations', message);
     };
@@ -2000,7 +1998,6 @@ var Actions = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (Actions);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2013,7 +2010,7 @@ var Actions = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {var initialState = {
+var initialState = {
   currentUser: {},
   conversations: [],
   loggedIn: false,
@@ -2038,7 +2035,6 @@ var Reducer = function Reducer() {
       });
 
     case 'RECEIVE_USER':
-      console.log('receiving_user');
       var loggedIn = true;
 
       if (action.id === "unauthorized") {
@@ -2112,7 +2108,6 @@ var Reducer = function Reducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Reducer);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2491,7 +2486,7 @@ ConversationList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(m
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions */ "./frontend/Actions.js");
@@ -2571,10 +2566,16 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleKeyDown",
+    value: function handleKeyDown(e) {
+      if (e.key === 'Enter') {
+        this.handleSubmit(e);
+      }
+    }
+  }, {
     key: "handleSignupClick",
     value: function handleSignupClick(e) {
       e.preventDefault();
-      console.log('signupClick');
       this.setState({
         signup: true
       });
@@ -2604,7 +2605,8 @@ function (_React$Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.password,
-        onChange: this.handlePasswordChange.bind(this)
+        onChange: this.handlePasswordChange.bind(this),
+        onKeyDown: this.handleKeyDown.bind(this)
       }))));
       var signupLink = this.props.loggedIn ? null : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "signup"
@@ -2652,7 +2654,6 @@ var mapDispatch = function mapDispatch(dispatch) {
 
 LoginBar = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(LoginBar);
 /* harmony default export */ __webpack_exports__["default"] = (LoginBar);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2918,13 +2919,13 @@ function (_React$Component) {
         'subject': this.state.subject,
         'message': this.state.message
       };
-      this.props.sendInitialMessage(initialMessageData); // this.setState({
-      //   to: "",
-      //   subject: "",
-      //   message: "",
-      //   errors: ""
-      // })
-      // refresh
+      this.props.sendInitialMessage(initialMessageData);
+      this.setState({
+        to: "",
+        subject: "",
+        message: "",
+        errors: ""
+      });
     }
   }, {
     key: "handleKeyDown",
@@ -2938,9 +2939,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "new-conversation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "To",
         value: this.state.to,
@@ -2956,10 +2955,7 @@ function (_React$Component) {
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Send"
-      })));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors));
     }
   }]);
 
@@ -3294,6 +3290,13 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleKeyDown",
+    value: function handleKeyDown(e) {
+      if (e.key === 'Enter') {
+        this.handleSubmit(e);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var errors = null;
@@ -3321,7 +3324,8 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Re-type password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         value: this.state.passwordTwo,
-        onChange: this.handlePasswordTwoChange.bind(this)
+        onChange: this.handlePasswordTwoChange.bind(this),
+        onKeyDown: this.handleKeyDown.bind(this)
       })), errors, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "signup-button-toggle",
         onClick: this.handleSubmit.bind(this)

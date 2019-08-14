@@ -41,13 +41,12 @@ class NewConversation extends React.Component {
       'message': this.state.message
     }
     this.props.sendInitialMessage(initialMessageData)
-    // this.setState({
-    //   to: "",
-    //   subject: "",
-    //   message: "",
-    //   errors: ""
-    // })
-    // refresh
+    this.setState({
+      to: "",
+      subject: "",
+      message: "",
+      errors: ""
+    })
   }
 
   handleKeyDown(e) {
@@ -60,48 +59,20 @@ class NewConversation extends React.Component {
     return (
       <div id="new-conversation">
         <h2>New Conversation</h2>
-
-
-
-        <form onSubmit={this.handleSubmit.bind(this)}>
-
-
-
-
-
-
-
-
-
-            <input type="text"
-                   placeholder="To"
-                   value={this.state.to}
-                   onChange={this.handleToChange.bind(this)} />
-            <input type="text"
-                   placeholder="Subject"
-                   value={this.state.subject}
-                   onChange={this.handleSubjectChange.bind(this)} />
-            <textarea className="MessageText"
-                      placeholder="Type your message and press Enter to send"
-                      value={this.state.message}
-                      onChange={this.handleMessageChange.bind(this)}
-                      onKeyDown={this.handleKeyDown.bind(this)} />
-
-
-          <div>{this.state.errors}</div>
-          <input type="submit" value="Send" />
-
-
-
-
-
-
-
-
-        </form>
-
-
-
+        <input type="text"
+               placeholder="To"
+               value={this.state.to}
+               onChange={this.handleToChange.bind(this)} />
+        <input type="text"
+               placeholder="Subject"
+               value={this.state.subject}
+               onChange={this.handleSubjectChange.bind(this)} />
+        <textarea className="MessageText"
+                  placeholder="Type your message and press Enter to send"
+                  value={this.state.message}
+                  onChange={this.handleMessageChange.bind(this)}
+                  onKeyDown={this.handleKeyDown.bind(this)} />
+        <div>{this.state.errors}</div>
       </div>
     )
   }

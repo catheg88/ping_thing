@@ -39,9 +39,14 @@ class LoginBar extends React.Component {
     })
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e)
+    }
+  }
+
   handleSignupClick(e) {
     e.preventDefault()
-    console.log('signupClick')
     this.setState({ signup: true})
   }
 
@@ -71,7 +76,8 @@ class LoginBar extends React.Component {
               <span>Password: </span>
               <input type="password"
                 value={this.state.password}
-                onChange={this.handlePasswordChange.bind(this)} />
+                onChange={this.handlePasswordChange.bind(this)}
+                onKeyDown={this.handleKeyDown.bind(this)} />
             </div>
           </div>
         </div>
