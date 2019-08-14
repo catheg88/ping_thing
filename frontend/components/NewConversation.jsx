@@ -85,7 +85,7 @@ class NewConversation extends React.Component {
                       placeholder="Type your message and press Enter to send"
                       value={this.state.message}
                       onChange={this.handleMessageChange.bind(this)}
-                      onKeyDown={this.handleKeyDown.bind(this)}} />
+                      onKeyDown={this.handleKeyDown.bind(this)} />
 
 
           <div>{this.state.errors}</div>
