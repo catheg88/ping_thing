@@ -2148,7 +2148,7 @@ var Store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_Reducer__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
@@ -2251,9 +2251,6 @@ document.addEventListener("DOMContentLoaded", function () {
 pusherChannel.bind('update', function (data) {
   var currentUser = _Store__WEBPACK_IMPORTED_MODULE_3__["default"].getState().currentUser; // interested users array calculated by controller and sent in pusher message
 
-  console.log('pusher data');
-  console.log(data);
-
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchConversation(data.conversation_id));
@@ -2265,12 +2262,10 @@ pusherChannel.bind('update', function (data) {
     }
 
     if (data.message === 'new_message') {
-      console.log('pusher new_message');
       _Store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchMessage(data.message_id, data.conversation_id));
     }
   }
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2738,7 +2733,7 @@ function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(console) {/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions.js */ "./frontend/Actions.js");
@@ -2785,11 +2780,8 @@ function (_React$Component) {
       var _this = this;
 
       var messageComponents = null;
-      console.log('rendering MessageList');
       this.props.conversations.forEach(function (conversation) {
         if (conversation.id === _this.props.focus) {
-          console.log('bingo!');
-
           if (conversation.messages) {
             messageComponents = conversation.messages.map(function (message, idx) {
               return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -2827,7 +2819,6 @@ var mapDispatch = function mapDispatch(dispatch) {
 
 MessageList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(MessageList);
 /* harmony default export */ __webpack_exports__["default"] = (MessageList);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js")))
 
 /***/ }),
 
@@ -2836,143 +2827,9 @@ MessageList = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapSta
   !*** ./frontend/components/NewConversation.jsx ***!
   \*************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions */ "./frontend/Actions.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-var NewConversation =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(NewConversation, _React$Component);
-
-  function NewConversation(props) {
-    var _this;
-
-    _classCallCheck(this, NewConversation);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewConversation).call(this, props));
-    _this.state = {
-      to: "",
-      subject: "",
-      message: "",
-      errors: ""
-    };
-    return _this;
-  }
-
-  _createClass(NewConversation, [{
-    key: "handleToChange",
-    value: function handleToChange(e) {
-      e.preventDefault();
-      this.setState({
-        to: e.target.value
-      });
-    }
-  }, {
-    key: "handleSubjectChange",
-    value: function handleSubjectChange(e) {
-      e.preventDefault();
-      this.setState({
-        subject: e.target.value
-      });
-    }
-  }, {
-    key: "handleMessageChange",
-    value: function handleMessageChange(e) {
-      e.preventDefault();
-      this.setState({
-        message: e.target.value
-      });
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-
-      if (this.state.to === "" || this.state.subject === "" || this.state.message === "") {
-        this.setState({
-          errors: "To, Subject, and Message fields cannot be blank"
-        });
-        return;
-      }
-
-      var initialMessageData = {
-        'to': this.state.to,
-        'subject': this.state.subject,
-        'message': this.state.message
-      };
-      this.props.sendInitialMessage(initialMessageData); // this.setState({
-      //   to: "",
-      //   subject: "",
-      //   message: "",
-      //   errors: ""
-      // })
-      // refresh
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "new-conversation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit.bind(this)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "To: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.to,
-        onChange: this.handleToChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Subject: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.subject,
-        onChange: this.handleSubjectChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Message: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        value: this.state.message,
-        onChange: this.handleMessageChange.bind(this)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Send"
-      })));
-    }
-  }]);
-
-  return NewConversation;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    sendInitialMessage: function sendInitialMessage(initialMessageData) {
-      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_2__["default"].sendInitialMessage(initialMessageData));
-    }
-  };
-};
-
-NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversation);
-/* harmony default export */ __webpack_exports__["default"] = (NewConversation);
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/atheg/Desktop/ping_thing/ping_thing/frontend/components/NewConversation.jsx: Unexpected token (88:63)\n\n\u001b[0m \u001b[90m 86 | \u001b[39m                      value\u001b[33m=\u001b[39m{\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mmessage}\u001b[0m\n\u001b[0m \u001b[90m 87 | \u001b[39m                      onChange\u001b[33m=\u001b[39m{\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhandleMessageChange\u001b[33m.\u001b[39mbind(\u001b[36mthis\u001b[39m)}\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 88 | \u001b[39m                      onKeyDown\u001b[33m=\u001b[39m{\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhandleKeyDown\u001b[33m.\u001b[39mbind(\u001b[36mthis\u001b[39m)}} \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 89 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 90 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 91 | \u001b[39m          \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m{\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39merrors}\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object.raise (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Object.unexpected (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Object.jsxParseIdentifier (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3379:12)\n    at Object.jsxParseNamespacedName (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3389:23)\n    at Object.jsxParseAttribute (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3469:22)\n    at Object.jsxParseOpeningElementAfterName (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3490:28)\n    at Object.jsxParseOpeningElementAt (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3483:17)\n    at Object.jsxParseElementAt (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3515:33)\n    at Object.jsxParseElementAt (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3531:32)\n    at Object.jsxParseElementAt (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3531:32)\n    at Object.jsxParseElement (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3589:17)\n    at Object.parseExprAtom (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3596:19)\n    at Object.parseExprSubscripts (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseParenAndDistinguishExpression (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8978:28)\n    at Object.parseExprAtom (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8762:21)\n    at Object.parseExprAtom (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:3601:20)\n    at Object.parseExprSubscripts (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseExpression (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Object.parseReturnStatement (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:10198:28)\n    at Object.parseStatementContent (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:9877:21)\n    at Object.parseStatement (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Object.parseBlockOrModuleBlockBody (/Users/atheg/Desktop/ping_thing/ping_thing/node_modules/@babel/parser/lib/index.js:10405:25)");
 
 /***/ }),
 
@@ -3150,8 +3007,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "compose-reply"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        id: "reply-text",
-        placeholder: this.state.errors ? this.state.errors : 'Type your message and press Enter to send',
+        className: "MessageText",
+        placeholder: this.state.errors ? this.state.errors : "Type your message and press Enter to send",
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)
@@ -3283,10 +3140,10 @@ function (_React$Component) {
       };
       this.props.submitSignup(signupData);
       this.setState({
-        //   username: "",
-        //   email: "",
-        //   passwordOne: "",
-        //   passwordTwo: "",
+        username: "",
+        email: "",
+        passwordOne: "",
+        passwordTwo: "",
         tried: true
       });
     }

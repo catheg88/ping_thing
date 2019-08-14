@@ -23,19 +23,20 @@ class App extends React.Component {
         <div id="main-pane">
           <div id="column-flex-container">
             {this.props.loggedIn ?
-              <div id="list-pane">
-                <ConversationList />
-              </div>
-              : null}
+                <div id="list-pane">
+                  <ConversationList />
+                </div>
+              :
+                null}
             {this.props.loggedIn ?
-              <div id="read-write-pane">
-                {(this.props.focus === 'newConversation') ?
-                  <NewConversation />
-                  :
-                  <MessageList />
-                }
-              </div>
-              : null}
+                <div id="read-write-pane">
+                  {(this.props.focus === 'newConversation') ?
+                      <NewConversation />
+                    :
+                      <MessageList />}
+                </div>
+              :
+                null}
           </div>
         </div>
       </div>
@@ -72,8 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
 pusherChannel.bind('update', function(data) {
   var currentUser = Store.getState().currentUser
   // interested users array calculated by controller and sent in pusher message
-  console.log('pusher data')
-  console.log(data)
   if (data.interested_users.includes(currentUser.id)) {
     if (data.message === 'new_conversation') {
       Store.dispatch(Actions.fetchConversation(data.conversation_id))
@@ -83,7 +82,6 @@ pusherChannel.bind('update', function(data) {
       }
     }
     if (data.message === 'new_message') {
-      console.log('pusher new_message')
       Store.dispatch(Actions.fetchMessage(data.message_id, data.conversation_id))
     }
   }

@@ -47,10 +47,10 @@ class SignupBar extends React.Component {
 
     this.props.submitSignup(signupData)
     this.setState({
-    //   username: "",
-    //   email: "",
-    //   passwordOne: "",
-    //   passwordTwo: "",
+      username: "",
+      email: "",
+      passwordOne: "",
+      passwordTwo: "",
       tried: true
     })
   }
@@ -60,7 +60,9 @@ class SignupBar extends React.Component {
     if (this.props.currentUser.username === 'unauthorized' &&
         this.state.tried === true &&
         this.props.awaitUser === false) {
-      errors = <div id="login-error">Signup failed. Ensure passwords match and are at least 6 characters, or try another username</div>
+      errors = <div id="login-error">
+                  Signup failed. Ensure passwords match and are at least 6 characters, or try another username
+                </div>
     }
     return (
       <div id="signup-form">
@@ -70,8 +72,7 @@ class SignupBar extends React.Component {
           <span>
             <input type="text"
                    value={this.state.username}
-                   onChange={this.handleUsernameChange.bind(this)}
-            />
+                   onChange={this.handleUsernameChange.bind(this)} />
           </span>
         </div>
         <div>
@@ -79,26 +80,25 @@ class SignupBar extends React.Component {
           <span>
             <input type="text"
                    value={this.state.email}
-                   onChange={this.handleEmailChange.bind(this)}
-            />
+                   onChange={this.handleEmailChange.bind(this)} />
           </span>
         </div>
         <div>
           <span>Password: </span>
           <input type="password"
             value={this.state.passwordOne}
-            onChange={this.handlePasswordOneChange.bind(this)}
-          />
+            onChange={this.handlePasswordOneChange.bind(this)} />
         </div>
         <div>
           <span>Re-type password: </span>
           <input type="password"
             value={this.state.passwordTwo}
-            onChange={this.handlePasswordTwoChange.bind(this)}
-          />
+            onChange={this.handlePasswordTwoChange.bind(this)} />
         </div>
         {errors}
-        <div id="signup-button-toggle" onClick={this.handleSubmit.bind(this)}>Sign up</div>
+        <div id="signup-button-toggle" onClick={this.handleSubmit.bind(this)}>
+          Sign up
+        </div>
       </div>
     )
   }

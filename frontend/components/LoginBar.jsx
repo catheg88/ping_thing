@@ -55,40 +55,40 @@ class LoginBar extends React.Component {
 
     var displayName = this.props.currentUser.username
     const navbarRight = this.props.loggedIn ?
-      (<div id="navbar-right">Hello, {this.props.currentUser.username}</div>)
+        <div id="navbar-right">Hello, {this.props.currentUser.username}</div>
       :
-      (<div id="navbar-right">
-        <div id="login-form">
-          <div>
-            <span>Username: </span>
-            <span>
-              <input type="text"
-                     value={this.state.username}
-                     onChange={this.handleUsernameChange.bind(this)}
-              />
-            </span>
-          </div>
-          <div>
-            <span>Password: </span>
-            <input type="password"
-              value={this.state.password}
-              onChange={this.handlePasswordChange.bind(this)}
-            />
+        <div id="navbar-right">
+          <div id="login-form">
+            <div>
+              <span>Username: </span>
+              <span>
+                <input type="text"
+                       value={this.state.username}
+                       onChange={this.handleUsernameChange.bind(this)} />
+              </span>
+            </div>
+            <div>
+              <span>Password: </span>
+              <input type="password"
+                value={this.state.password}
+                onChange={this.handlePasswordChange.bind(this)} />
+            </div>
           </div>
         </div>
-      </div>
-    )
 
     var signupLink = this.props.loggedIn ?
-      null
+        null
       :
-      <div id="signup">
-        {this.state.signup ?
-          <SignupForm />
-          :
-          <div id="signup-button-toggle" onClick={this.handleSignupClick.bind(this)}>Sign up</div>
-        }
-      </div>
+        <div id="signup">
+          {this.state.signup ?
+              <SignupForm />
+            :
+              <div id="signup-button-toggle"
+                   onClick={this.handleSignupClick.bind(this)}>
+                Sign up
+              </div>
+          }
+        </div>
 
     return (
       <div>
@@ -98,13 +98,13 @@ class LoginBar extends React.Component {
             {navbarRight}
             <div>{errors}</div>
             {this.props.loggedIn ?
-              <div id="login-logout" onClick={this.props.logOut}>
-                Logout
-              </div>
+                <div id="login-logout" onClick={this.props.logOut}>
+                  Logout
+                </div>
               :
-              <div id="login-logout" onClick={this.handleSubmit.bind(this)}>
-                Login
-              </div>}
+                <div id="login-logout" onClick={this.handleSubmit.bind(this)}>
+                  Login
+                </div>}
           </div>
         </div>
         {signupLink}

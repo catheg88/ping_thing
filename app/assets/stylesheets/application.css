@@ -227,7 +227,7 @@ html, body {
   text-align: center;
 }
 
-#reply-text {
+.ReplyText {
   height: 60px;
   min-width: 95%;
   max-width: 95%;

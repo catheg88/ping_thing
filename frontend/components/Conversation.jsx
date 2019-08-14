@@ -21,26 +21,29 @@ class Conversation extends React.Component {
     }
 
     var conversation = (this.props.focus === this.props.conversation.id) ?
-      <div className="ActiveConversation"
-           onClick={() => this.handleConversationClick(this.props.conversation.id)}
-      >
-        <div className="ConversationCardContents">
-          <div><b>{participants}</b></div>
-          <div>{this.props.conversation.subject}</div>
-          <div className="ConversationDate">{this.props.conversation.updated_at}</div>
+        <div className="ActiveConversation"
+             onClick={() => this.handleConversationClick(this.props.conversation.id)}>
+          <div className="ConversationCardContents">
+            <div>
+              <b>{participants}</b>
+            </div>
+            <div>
+              {this.props.conversation.subject}
+            </div>
+            <div className="ConversationDate">
+              {this.props.conversation.updated_at}
+            </div>
+          </div>
         </div>
-      </div>
       :
-      <div className="Conversation"
-        onClick={() => this.handleConversationClick(this.props.conversation.id)}
-        >
-        <div className="ConversationCardContents">
-          <div><b>{participants}</b></div>
-          <div>{this.props.conversation.subject}</div>
-          <div className="ConversationDate">{this.props.conversation.updated_at}</div>
+        <div className="Conversation"
+          onClick={() => this.handleConversationClick(this.props.conversation.id)}>
+          <div className="ConversationCardContents">
+            <div><b>{participants}</b></div>
+            <div>{this.props.conversation.subject}</div>
+            <div className="ConversationDate">{this.props.conversation.updated_at}</div>
+          </div>
         </div>
-      </div>
-
 
     return <div>{conversation}</div>
   }

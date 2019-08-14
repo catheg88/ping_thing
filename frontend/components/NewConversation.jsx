@@ -29,7 +29,6 @@ class NewConversation extends React.Component {
     this.setState({ message: e.target.value})
   }
 
-
   handleSubmit(e) {
     e.preventDefault()
     if ( this.state.to === "" || this.state.subject === "" || this.state.message === "") {
@@ -51,38 +50,58 @@ class NewConversation extends React.Component {
     // refresh
   }
 
-  render() {
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e)
+    }
+  }
 
+  render() {
     return (
       <div id="new-conversation">
         <h2>New Conversation</h2>
+
+
+
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div>
-            <label>
-              <span>To: </span>
-              <input type="text"
-                     value={this.state.to}
-                     onChange={this.handleToChange.bind(this)} />
-            </label>
-          </div>
-          <div>
-            <label>
-              <span>Subject: </span>
-              <input type="text"
-                     value={this.state.subject}
-                     onChange={this.handleSubjectChange.bind(this)} />
-            </label>
-          </div>
-          <div>
-            <label>
-              <span>Message: </span>
-              <textarea value={this.state.message}
-                        onChange={this.handleMessageChange.bind(this)} />
-            </label>
-          </div>
+
+
+
+
+
+
+
+
+
+            <input type="text"
+                   placeholder="To"
+                   value={this.state.to}
+                   onChange={this.handleToChange.bind(this)} />
+            <input type="text"
+                   placeholder="Subject"
+                   value={this.state.subject}
+                   onChange={this.handleSubjectChange.bind(this)} />
+            <textarea className="MessageText"
+                      placeholder="Type your message and press Enter to send"
+                      value={this.state.message}
+                      onChange={this.handleMessageChange.bind(this)}
+                      onKeyDown={this.handleKeyDown.bind(this)}} />
+
+
           <div>{this.state.errors}</div>
           <input type="submit" value="Send" />
+
+
+
+
+
+
+
+
         </form>
+
+
+
       </div>
     )
   }

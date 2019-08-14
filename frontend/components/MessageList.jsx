@@ -10,10 +10,8 @@ class MessageList extends React.Component {
 
   render() {
     var messageComponents = null
-    console.log('rendering MessageList')
     this.props.conversations.forEach( conversation => {
       if (conversation.id === this.props.focus) {
-        console.log('bingo!')
         if (conversation.messages) {
           messageComponents = conversation.messages.map( (message, idx) => {
             return <Message message={message}

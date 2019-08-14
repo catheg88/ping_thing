@@ -12,8 +12,9 @@ class NewConversationButton extends React.Component {
 
   render() {
     return <div id="new-conversation-button"
-                onClick={this.handleClick.bind(this)}
-           >Start a new conversation</div>
+                onClick={this.handleClick.bind(this)}>
+              Start a new conversation
+           </div>
   }
 }
 
