@@ -44,12 +44,10 @@ class ReplyMessageForm extends React.Component {
     return (
       <div id="compose-reply">
         <textarea id="reply-text"
+                  placeholder="type message and press enter"
                   value={this.state.message}
                   onChange={this.handleMessageChange.bind(this)}
                   onKeyDown={this.handleKeyDown.bind(this)} />
-        <div id="send-button"
-             onClick={this.handleSubmit.bind(this)}
-        >Send</div>
       </div>
     )
   }

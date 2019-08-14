@@ -2315,7 +2315,7 @@ function (_React$Component) {
       } else {
         participants = participants.filter(function (p) {
           return p !== _this.props.currentUser.username;
-        }).join(", ") + " and you";
+        }).join(", ");
       }
 
       var conversation = this.props.focus === this.props.conversation.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2323,16 +2323,20 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this.handleConversationClick(_this.props.conversation.id);
         }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ConversationCardContents"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ConversationDate"
-      }, this.props.conversation.updated_at)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.conversation.updated_at))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Conversation",
         onClick: function onClick() {
           return _this.handleConversationClick(_this.props.conversation.id);
         }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ConversationCardContents"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, participants)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.conversation.subject), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "ConversationDate"
-      }, this.props.conversation.updated_at));
+      }, this.props.conversation.updated_at)));
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, conversation);
     }
   }]);
@@ -3102,13 +3106,11 @@ function (_React$Component) {
         id: "compose-reply"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         id: "reply-text",
+        placeholder: "type message and press enter",
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "send-button",
-        onClick: this.handleSubmit.bind(this)
-      }, "Send"));
+      }));
     }
   }]);
 
