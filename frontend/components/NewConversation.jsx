@@ -54,7 +54,7 @@ class NewConversation extends React.Component {
   render() {
 
     return (
-      <div>
+      <div id="new-conversation">
         <h2>New Conversation</h2>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div>

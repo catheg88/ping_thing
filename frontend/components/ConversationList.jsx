@@ -16,8 +16,8 @@ class ConversationList extends React.Component {
     })
 
     return (
-      <div>
-        <h2>Messages</h2>
+      <div id="conversation-list">
+        <h2>Conversations</h2>
         {Conversations}
       </div>
     )

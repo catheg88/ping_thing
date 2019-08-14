@@ -14,19 +14,18 @@
  *= require_self
  */
 
-html {
-  /*height: 100%;*/
+html, body {
+  height: 100%;
   /*background-image: url("background.jpg");*/
   /*background-position: center;*/
   /*background-size: cover;
   background-attachment: fixed;*/
+  margin: 0;
   font-family: 'Ubuntu';
 }
 
-body {
-  margin: 0;
-  height: 100%;
-  /* border: 1px */
+#root, #app, #main-pane, #column-flex-container {
+  height: 100%
 }
 
 #navbar {
@@ -47,6 +46,7 @@ body {
   border-right: 2px solid #51728E;
   /* font-weight: 700; */
   padding: 10px 20px;
+  background-color: #658FB3;
 }
 
 #login-form {
@@ -58,8 +58,6 @@ body {
 
 #login-form > div {
   padding-right: 10px;
-  /* padding-right: 5px;
-  padding-left: 5px; */
 }
 
 #navbar-right-container {
@@ -92,4 +90,22 @@ padding-right: 10px;
 #login-logout:hover {
   background-color: #658FB3;
   cursor: pointer;
+}
+
+#main-pane {
+  margin: 0px 10px 10px 10px;
+}
+
+#column-flex-container {
+  display: flex;
+  padding: 0px 10px 10px 0px;
+}
+
+#conversation-list {
+  width: 33%;
+  border-right: 1px solid #51728E;
+}
+#new-conversation {
+  width: 66%;
+  padding: 0px 10px 10px 10px;
 }

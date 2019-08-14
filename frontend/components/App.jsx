@@ -18,8 +18,12 @@ class App extends React.Component {
     return (
       <div id="app">
         <LoginForm />
-        {this.props.loggedIn ? <NewConversation /> : null}
-        {this.props.loggedIn ? <ConversationList /> : null}
+        <div id="main-pane">
+          <div id="column-flex-container">
+            {this.props.loggedIn ? <ConversationList /> : null}
+            {this.props.loggedIn ? <NewConversation /> : null}
+          </div>
+        </div>
       </div>
     )
   }
@@ -46,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <Provider store={Store}>
       <App />
     </Provider>,
-    document.getElementById("content"));
+    document.getElementById("root"));
 });
 
 // pusherChannel provided from rails `app/views/layouts/application.html.erb`
