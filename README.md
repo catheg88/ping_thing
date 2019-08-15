@@ -22,20 +22,33 @@ This app was built using
 ## Installation
 To install:
 1. Clone this repo:
+
 `git clone https://github.com/catheg88/ping_thing`
+
 2. `cd` into the root app directory:
+
 `cd ping_thing`
+
 3. Install the frontend javascript dependencies with `npm`:
+
 `npm install`
+
 4. Create and seed the database. This step assumes you're running Postgres:
+
 `rake db:reset`
-5. Start the Rails server running on `localhost:3000`:
+
+5. Configure a Pusher channel to work with your application.
+  1. Sign up for a Pusher account (https://dashboard.pusher.com/accounts/sign_up) and create a Channels app to get your Pusher credentials/key.
+  2. Configure your Rails app Pusher initializer by providing your credentials to `config/initializers/pusher.rb`. See [this example](https://pusher.com/tutorials/online-presence-ruby-rails#realtime-service-with-pusher) for a demo of how to configure Pusher with Rails.
+
+6. Start the Rails server running on `localhost:3000`:
+
 `rails s`
 
-6. Visit `http://localhost:3000/` and you should see the app up and running.
+7. Visit `http://localhost:3000/` and you should see the app up and running.
 
 ## Data model overview
-* `Conversation` records belong to a `user` (the creator) and a conversation `subject`
+* `Conversation` records belong to a `user` (the creator) and have a conversation `subject`
 * `Message` records store the message `body` text, the author's `user_id`, and a `conversation_id` so they know which conversation they belong to
 * `Conversation`s are associated with users through a `ConversationUser` table, which stores pairs of `user_id`s and `conversation_id`s. The user and their conversation models are linked by a `has many... through` association through this table.
 * `User`s are Devise users. Kinda boring.
