@@ -60,7 +60,6 @@ class Api::MessagesController < ApplicationController
     conversation.users.each do |u|
       interested_users << u.id
     end
-    puts interested_users
 
     Pusher.trigger('ping_channel', 'update', {
       message: 'new_message',

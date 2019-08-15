@@ -1,14 +1,20 @@
 # README
 
-PingThing is a messaging app with a single page React / Redux frontend and a Rails 5 backend. The frontend sends and retrieves data via a Rails JSON API.
+PingThing is a messaging app that combines the best parts of real-time chat (IRC) and email threads.
 
-Here are some ways it's cooler than it looks:
-* Data is stored in the client Redux state once it's been fetched, minimizing unnecessary database queries.
-* Real-time updates to receive messages using Pusher/websockets. Only affected users respond to each Pusher notification, and they grab only the new data they don't have from the database.
+Try the demo [deployed on Heroku](https://pingthing.herokuapp.com/). Sign up or use the demo account:
+un: 'demo'
+pw: 'password'
+
+PingThing is a single page React / Redux frontend and a Rails 5 backend. The frontend sends and retrieves data via a Rails JSON API.
+
+Here are some ways it's cool:
+* Data is stored in the client Redux state once it's been fetched from Rails, eliminating unnecessary database queries
+* Interface receives real-time updates (incoming messages) using Pusher/websockets. Only affected users respond to each Pusher notification, and they grab only the new data they don't have from the database
 * Clean data model that scales well. Database indexes for fast lookups and validations. No silly nonsense like duplicating conversation/message records for each user, storing message recipient IDs in an array and trying to use them for lookups, etc.
 * API endpoint responses are restricted to only allow access to the current user's data. Stacie can't read Alex's message to Taylor.
-* Responsive design to display well in a variety of viewports
-* Text auto-matching to find usernames for the "To" field
+* Responsive design to display well with many screen sizes
+* "To" field only accepts recognized other users as message recipients
 
 # Installation
 This app was built using
@@ -38,8 +44,3 @@ Additional indexes in the database ensure speedy:
 * Validations (e.g. confirming uniqueness of `ConversationUser` records)
 
 This is a summary only - see [db/schema.rb](db/schema.rb) for comprehensive database structure.
-
-# TODO: Things you may want to cover:
-* Configuration
-* Database creation
-* Database initialization
