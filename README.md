@@ -2,8 +2,6 @@
 
 PingThing is a messaging app that combines the best parts of real-time chat (IRC) and email threads.
 
-Try the demo [deployed on Heroku](https://pingthing.herokuapp.com/). Sign up or use the demo account (un: 'demo', pw: 'password').
-
 PingThing is a single page React / Redux frontend and a Rails 5 backend. The frontend sends and retrieves data via a Rails JSON API.
 
 Here are some ways it's cool:
