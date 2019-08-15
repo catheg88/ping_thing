@@ -1926,6 +1926,19 @@ var Actions = {
       email: user.email
     };
   },
+  fetchUsers: function fetchUsers() {
+    return function (dispatch) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/users').then(function (res) {
+        dispatch(Actions.receiveUsers(res.data));
+      });
+    };
+  },
+  receiveUsers: function receiveUsers(users) {
+    return {
+      type: 'RECEIVE_USERS',
+      users: users
+    };
+  },
   fetchConversation: function fetchConversation(conversation_id) {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/conversations/".concat(conversation_id)).then(function (res) {
@@ -2049,6 +2062,11 @@ var Reducer = function Reducer() {
         },
         loggedIn: loggedIn,
         awaitUser: false
+      });
+
+    case 'RECEIVE_USERS':
+      return Object.assign({}, state, {
+        users: action.users
       });
 
     case 'RECEIVE_CONVERSATION':
@@ -2199,6 +2217,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchUser();
+      this.props.fetchUsers();
     }
   }, {
     key: "render",
@@ -2234,6 +2253,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetchUser: function fetchUser() {
       dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUser());
+    },
+    fetchUsers: function fetchUsers() {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUsers());
     }
   };
 };
@@ -2941,7 +2963,9 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "new-conversation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "new-conversation-bg"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "to-input",
         type: "text",
         placeholder: "To",
@@ -2959,7 +2983,7 @@ function (_React$Component) {
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
         onKeyDown: this.handleKeyDown.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors)));
     }
   }]);
 

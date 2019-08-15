@@ -72,6 +72,20 @@ const Actions = {
     email: user.email
   }),
 
+  fetchUsers: () => {
+    return function(dispatch) {
+      return axios.get('/api/users')
+        .then( res => {
+          dispatch(Actions.receiveUsers(res.data))
+        })
+    }
+  },
+
+  receiveUsers: users => ({
+    type: 'RECEIVE_USERS',
+    users: users
+  }),
+
   fetchConversation: conversation_id => {
     return function(dispatch) {
       return axios.get(`/api/conversations/${conversation_id}`)

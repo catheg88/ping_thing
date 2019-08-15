@@ -35,7 +35,12 @@ const Reducer = function ( state = initialState, action ) {
         awaitUser: false
       })
 
-      case 'RECEIVE_CONVERSATION':
+    case 'RECEIVE_USERS':
+      return Object.assign({}, state, {
+        users: action.users
+      })
+
+    case 'RECEIVE_CONVERSATION':
       var newConversations = JSON.parse(JSON.stringify(state.conversations))
       newConversations.unshift(action.conversation)
       return Object.assign({}, state, {

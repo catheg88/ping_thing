@@ -59,20 +59,22 @@ class NewConversation extends React.Component {
     return (
       <div id="new-conversation">
         <h2>New Conversation</h2>
-        <input id="to-input" type="text"
-               placeholder="To"
-               value={this.state.to}
-               onChange={this.handleToChange.bind(this)} />
-             <input id="subject-input" type="text"
-               placeholder="Subject"
-               value={this.state.subject}
-               onChange={this.handleSubjectChange.bind(this)} />
-             <textarea id="NewMessageText"
-                  placeholder="Type your message and press Enter to send"
-                  value={this.state.message}
-                  onChange={this.handleMessageChange.bind(this)}
-                  onKeyDown={this.handleKeyDown.bind(this)} />
-        <div>{this.state.errors}</div>
+        <div id="new-conversation-bg">
+          <input id="to-input" type="text"
+                 placeholder="To"
+                 value={this.state.to}
+                 onChange={this.handleToChange.bind(this)} />
+               <input id="subject-input" type="text"
+                 placeholder="Subject"
+                 value={this.state.subject}
+                 onChange={this.handleSubjectChange.bind(this)} />
+               <textarea id="NewMessageText"
+                    placeholder="Type your message and press Enter to send"
+                    value={this.state.message}
+                    onChange={this.handleMessageChange.bind(this)}
+                    onKeyDown={this.handleKeyDown.bind(this)} />
+          <div>{this.state.errors}</div>
+        </div>
       </div>
     )
   }

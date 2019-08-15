@@ -226,7 +226,7 @@ h2 {
   height: 60px;
   min-width: 95%;
   max-width: 95%;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
@@ -237,7 +237,7 @@ h2 {
   height: 60px;
   min-width: 95%;
   max-width: 95%;
-  border-radius: 0px 0px 4px 4px;
+  /* border-radius: 0px 0px 4px 4px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
@@ -248,11 +248,12 @@ h2 {
   height: 25px;
   min-width: 95%;
   max-width: 95%;
-  border-radius: 4px 4px 0px 0px;
+  /* border-radius: 4px 4px 0px 0px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
   border: none;
+  border-bottom: 1px solid #C8D8E6;
 }
 
 #subject-input {
@@ -264,10 +265,15 @@ h2 {
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
   border: none;
+  border-bottom: 1px solid #C8D8E6;
 }
 
 #subject-input:focus, #to-input:focus, #NewMessageText:focus, .MessageText:focus {
   outline: none;
+}
+
+#new-conversation-bg {
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE)
 }
 
 textarea, input {
