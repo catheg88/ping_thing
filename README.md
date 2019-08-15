@@ -14,27 +14,29 @@ Here are some ways it's cool:
 * Responsive design to display well with many screen sizes
 * "To" field only accepts recognized other users as message recipients
 
-# Installation
+## Dependencies
 This app was built using
 * Rails `v5.1.7`
 * Ruby `v2.6.3p62`
 * Postgres `v9.5.1.0`
 * npm `v6.7.0`
 
+## Installation
 To install:
-* Clone this repo:
+1. Clone this repo:
+  * `git clone https://github.com/catheg88/ping_thing`
+2. `cd` into the root app directory:
+  * `cd ping_thing`
+3. Install the frontend javascript dependencies with `npm`:
+  * `npm install`
+4. Create and seed the database. This step assumes you're running Postgres:
+  * `rake db:reset`
+5. Start the Rails server running on `localhost:3000`:
+  * `rails s`
 
-`git clone https://github.com/catheg88/ping_thing`
-* `cd` into the root app directory:
+6. Visit `http://localhost:3000/` and you should see the app up and running.
 
-`cd ping_thing`
-* Install the frontend javascript dependencies with `npm`:
-
-`npm install`
-* TODO: SETUP DB
-* TODO: CREATE USERS
-
-# Data model overview
+## Data model overview
 * `Conversation` records belong to a `user` (the creator) and a conversation `subject`
 * `Message` records store the message `body` text, the author's `user_id`, and a `conversation_id` so they know which conversation they belong to
 * `Conversation`s are associated with users through a `ConversationUser` table, which stores pairs of `user_id`s and `conversation_id`s. The user and their conversation models are linked by a `has many... through` association through this table.
