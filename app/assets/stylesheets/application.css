@@ -91,7 +91,6 @@ html, body {
 #login-logout {
   justify-content: center;
   align-items: center;
-  /* border-left: 2px solid #51728E; */
   padding: 0px 10px;
   height: 50px;
   width: 64px;
@@ -170,6 +169,10 @@ h2 {
   padding: 0px 10px 10px 10px;
 }
 
+#new-conversation-heading {
+  padding-left: 0px
+}
+
 .Conversation {
   padding: 5px 0px;
 }
@@ -226,7 +229,6 @@ h2 {
   height: 60px;
   min-width: 95%;
   max-width: 95%;
-  /* border-radius: 4px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
@@ -237,7 +239,6 @@ h2 {
   height: 60px;
   min-width: 95%;
   max-width: 95%;
-  /* border-radius: 0px 0px 4px 4px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
@@ -248,28 +249,62 @@ h2 {
   height: 25px;
   min-width: 95%;
   max-width: 95%;
-  /* border-radius: 4px 4px 0px 0px; */
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
+  /* border-bottom: 1px solid #C8D8E6; */
+}
+
+#username-matches {
+  height: 25px;
+  min-width: 95%;
+  max-width: 95%;
+  padding: 5px 5px 5px 25px;
+  font-family: 'Ubuntu';
+  font-size: 12pt;
+  background: linear-gradient(to right, #D2DFEA, #FEFEFE);
+  border: none;
+  border-top: 1px solid #C8D8E6;
+  align-items: center;
+  display: flex;
+  color: grey;
+  font-style: italic;
+  justify-content: space-between;
+}
+
+#recipients {
+  height: 25px;
+  min-width: 95%;
+  max-width: 95%;
+  padding: 5px 5px 5px 25px;
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
   border: none;
   border-bottom: 1px solid #C8D8E6;
+  align-items: center;
+  display: flex;
+  color: grey;
+  font-style: italic;
 }
 
 #subject-input {
   height: 25px;
   min-width: 95%;
   max-width: 95%;
-  /* border-radius: 4px; */
   font-family: 'Ubuntu';
   font-size: 12pt;
   background: linear-gradient(to right, #D2DFEA, #FEFEFE);
   border: none;
   border-bottom: 1px solid #C8D8E6;
+  display: flex;
+  align-items: center;
 }
 
 #subject-input:focus, #to-input:focus, #NewMessageText:focus, .MessageText:focus {
   outline: none;
+  font-family: 'Ubuntu';
 }
 
 #new-conversation-bg {
@@ -278,4 +313,14 @@ h2 {
 
 textarea, input {
   padding: 5px;
+}
+
+#show-username-list {
+  cursor: pointer;
+  color: #81ACD2;
+}
+
+#show-username-list:hover {
+  cursor: pointer;
+  color: #51728E;
 }

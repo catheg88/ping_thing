@@ -3,7 +3,8 @@ const initialState = {
   conversations: [],
   loggedIn: false,
   awaitUser: false,
-  focus: "newConversation"
+  focus: "newConversation",
+  usernames: []
 }
 
 const Reducer = function ( state = initialState, action ) {
@@ -35,9 +36,12 @@ const Reducer = function ( state = initialState, action ) {
         awaitUser: false
       })
 
-    case 'RECEIVE_USERS':
+    case 'RECEIVE_USERNAMES':
+      const usernames = action.users.map( user => user.username )
+
+
       return Object.assign({}, state, {
-        users: action.users
+        usernames: usernames
       })
 
     case 'RECEIVE_CONVERSATION':

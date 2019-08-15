@@ -14,7 +14,7 @@ import NewConversation from './NewConversation'
 class App extends React.Component {
   componentDidMount(){
     this.props.fetchUser()
-    this.props.fetchUsers()
+    this.props.fetchUsernames()
   }
 
   render() {
@@ -67,8 +67,8 @@ const mapDispatch = dispatch => ({
   fetchUser: () => {
     dispatch(Actions.fetchUser())
   },
-  fetchUsers: () => {
-    dispatch(Actions.fetchUsers())
+  fetchUsernames: () => {
+    dispatch(Actions.fetchUsernames())
   }
 })
 

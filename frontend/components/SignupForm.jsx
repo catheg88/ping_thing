@@ -66,7 +66,7 @@ class SignupBar extends React.Component {
     if (this.props.currentUser.username === 'unauthorized' &&
         this.state.tried === true &&
         this.props.awaitUser === false) {
-      errors = <div id="login-error">
+      errors = <div id="login-error" style={{color: 'red'}}>
                   Signup failed. Ensure passwords match and are at least 6 characters, or try another username
                 </div>
     }

@@ -1926,16 +1926,16 @@ var Actions = {
       email: user.email
     };
   },
-  fetchUsers: function fetchUsers() {
+  fetchUsernames: function fetchUsernames() {
     return function (dispatch) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/users').then(function (res) {
-        dispatch(Actions.receiveUsers(res.data));
+        dispatch(Actions.receiveUsernames(res.data));
       });
     };
   },
-  receiveUsers: function receiveUsers(users) {
+  receiveUsernames: function receiveUsernames(users) {
     return {
-      type: 'RECEIVE_USERS',
+      type: 'RECEIVE_USERNAMES',
       users: users
     };
   },
@@ -2028,7 +2028,8 @@ var initialState = {
   conversations: [],
   loggedIn: false,
   awaitUser: false,
-  focus: "newConversation"
+  focus: "newConversation",
+  usernames: []
 };
 
 var Reducer = function Reducer() {
@@ -2064,9 +2065,12 @@ var Reducer = function Reducer() {
         awaitUser: false
       });
 
-    case 'RECEIVE_USERS':
+    case 'RECEIVE_USERNAMES':
+      var usernames = action.users.map(function (user) {
+        return user.username;
+      });
       return Object.assign({}, state, {
-        users: action.users
+        usernames: usernames
       });
 
     case 'RECEIVE_CONVERSATION':
@@ -2217,7 +2221,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchUser();
-      this.props.fetchUsers();
+      this.props.fetchUsernames();
     }
   }, {
     key: "render",
@@ -2254,8 +2258,8 @@ var mapDispatch = function mapDispatch(dispatch) {
     fetchUser: function fetchUser() {
       dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUser());
     },
-    fetchUsers: function fetchUsers() {
-      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUsers());
+    fetchUsernames: function fetchUsernames() {
+      dispatch(_Actions__WEBPACK_IMPORTED_MODULE_4__["default"].fetchUsernames());
     }
   };
 };
@@ -2473,9 +2477,7 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "conversation-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-        id: "conversation-heading"
-      }, "Conversations"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversationButton__WEBPACK_IMPORTED_MODULE_4__["default"], null), Conversations);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Conversations"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewConversationButton__WEBPACK_IMPORTED_MODULE_4__["default"], null), Conversations);
     }
   }]);
 
@@ -2897,7 +2899,10 @@ function (_React$Component) {
       to: "",
       subject: "",
       message: "",
-      errors: ""
+      errors: "",
+      matchingUsernames: [],
+      recipients: [],
+      showUsers: false
     };
     return _this;
   }
@@ -2905,9 +2910,30 @@ function (_React$Component) {
   _createClass(NewConversation, [{
     key: "handleToChange",
     value: function handleToChange(e) {
+      var _this2 = this;
+
       e.preventDefault();
       this.setState({
         to: e.target.value
+      }, function () {
+        return _this2.matchUsernames();
+      });
+    }
+  }, {
+    key: "matchUsernames",
+    value: function matchUsernames() {
+      var _this3 = this;
+
+      var matchingUsernames = [];
+
+      if (this.state.to !== "" && this.state.to.length > 1) {
+        matchingUsernames = this.props.usernames.filter(function (username) {
+          return username.includes(_this3.state.to);
+        });
+      }
+
+      this.setState({
+        matchingUsernames: matchingUsernames
       });
     }
   }, {
@@ -2931,7 +2957,7 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
 
-      if (this.state.to === "" || this.state.subject === "" || this.state.message === "") {
+      if (this.state.recipients.length === 0 || this.state.subject === "" || this.state.message === "") {
         this.setState({
           errors: "To, Subject, and Message fields cannot be blank"
         });
@@ -2948,30 +2974,92 @@ function (_React$Component) {
         to: "",
         subject: "",
         message: "",
-        errors: ""
+        errors: "",
+        matchingUsernames: []
       });
     }
   }, {
-    key: "handleKeyDown",
-    value: function handleKeyDown(e) {
+    key: "handleSubmitKeyDown",
+    value: function handleSubmitKeyDown(e) {
       if (e.key === 'Enter') {
         this.handleSubmit(e);
       }
     }
   }, {
+    key: "handleToKeyDown",
+    value: function handleToKeyDown(e) {
+      var _this4 = this;
+
+      if (e.key === 'Enter' || e.key === 'Tab') {
+        e.preventDefault();
+      }
+
+      if ((e.key === 'Enter' || e.key === 'Tab') && this.state.matchingUsernames.length === 1) {
+        if (!this.state.recipients.includes(this.state.matchingUsernames[0])) {
+          this.state.recipients.push(this.state.matchingUsernames[0]);
+        }
+
+        this.setState({
+          to: ""
+        }, function () {
+          return _this4.matchUsernames();
+        });
+      }
+    }
+  }, {
+    key: "handleShowUsersClick",
+    value: function handleShowUsersClick(e) {
+      var newShowUsersState = !this.state.showUsers;
+      this.setState({
+        showUsers: newShowUsersState
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var usernames = null;
+
+      if (this.props.usernames && this.state.showUsers) {
+        usernames = this.props.usernames.map(function (username, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: idx
+          }, username);
+        });
+      } else {
+        usernames = null;
+      }
+
+      var usernameColor = this.state.matchingUsernames.length === 1 ? 'green' : 'red';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "new-conversation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        id: "new-conversation-heading"
+      }, "New Conversation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "new-conversation-bg"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "to-input",
         type: "text",
-        placeholder: "To",
+        placeholder: "Type usernames to add recipients",
         value: this.state.to,
-        onChange: this.handleToChange.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handleToChange.bind(this),
+        onKeyDown: this.handleToKeyDown.bind(this)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "username-matches"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Matching usernames: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        style: {
+          color: usernameColor
+        }
+      }, this.state.matchingUsernames.join(", "))), this.state.matchingUsernames.length === 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        style: {
+          color: 'green'
+        }
+      }, "enter/tab to add recipient") : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "recipients"
+      }, "Recipients:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        style: {
+          color: 'black'
+        }
+      }, this.state.recipients.join(", "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "subject-input",
         type: "text",
         placeholder: "Subject",
@@ -2982,13 +3070,26 @@ function (_React$Component) {
         placeholder: "Type your message and press Enter to send",
         value: this.state.message,
         onChange: this.handleMessageChange.bind(this),
-        onKeyDown: this.handleKeyDown.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.errors)));
+        onKeyDown: this.handleSubmitKeyDown.bind(this)
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          color: 'red'
+        }
+      }, this.state.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "show-username-list",
+        onClick: this.handleShowUsersClick.bind(this)
+      }, this.state.showUsers ? 'Hide' : 'Show', " username list")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, usernames)));
     }
   }]);
 
   return NewConversation;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapState = function mapState(state) {
+  return {
+    usernames: state.usernames
+  };
+};
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
@@ -2998,7 +3099,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   };
 };
 
-NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatch)(NewConversation);
+NewConversation = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(NewConversation);
 /* harmony default export */ __webpack_exports__["default"] = (NewConversation);
 
 /***/ }),
@@ -3331,7 +3432,10 @@ function (_React$Component) {
 
       if (this.props.currentUser.username === 'unauthorized' && this.state.tried === true && this.props.awaitUser === false) {
         errors = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          id: "login-error"
+          id: "login-error",
+          style: {
+            color: 'red'
+          }
         }, "Signup failed. Ensure passwords match and are at least 6 characters, or try another username");
       }
 

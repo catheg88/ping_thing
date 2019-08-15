@@ -72,17 +72,17 @@ const Actions = {
     email: user.email
   }),
 
-  fetchUsers: () => {
+  fetchUsernames: () => {
     return function(dispatch) {
       return axios.get('/api/users')
         .then( res => {
-          dispatch(Actions.receiveUsers(res.data))
+          dispatch(Actions.receiveUsernames(res.data))
         })
     }
   },
 
-  receiveUsers: users => ({
-    type: 'RECEIVE_USERS',
+  receiveUsernames: users => ({
+    type: 'RECEIVE_USERNAMES',
     users: users
   }),
 

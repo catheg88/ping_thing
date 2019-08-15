@@ -19,7 +19,7 @@ class ConversationList extends React.Component {
 
     return (
       <div id="conversation-list">
-        <h2 id="conversation-heading">Conversations</h2>
+        <h2>Conversations</h2>
         <NewConversationButton />
         {Conversations}
       </div>
