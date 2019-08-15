@@ -24,15 +24,15 @@ This app was built using
 ## Installation
 To install:
 1. Clone this repo:
-  * `git clone https://github.com/catheg88/ping_thing`
+`git clone https://github.com/catheg88/ping_thing`
 2. `cd` into the root app directory:
-  * `cd ping_thing`
+`cd ping_thing`
 3. Install the frontend javascript dependencies with `npm`:
-  * `npm install`
+`npm install`
 4. Create and seed the database. This step assumes you're running Postgres:
-  * `rake db:reset`
+`rake db:reset`
 5. Start the Rails server running on `localhost:3000`:
-  * `rails s`
+`rails s`
 
 6. Visit `http://localhost:3000/` and you should see the app up and running.
 
