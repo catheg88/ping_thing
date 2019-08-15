@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = User.all.order(:username)
   end
 end
