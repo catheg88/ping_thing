@@ -36,6 +36,6 @@
   },
   "homepage": "https://github.com/catheg88/ping_thing#readme",
   "devDependencies": {
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.12"
   }
 }
